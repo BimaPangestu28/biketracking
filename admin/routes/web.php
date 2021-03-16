@@ -38,5 +38,7 @@ Route::post('login-status', 'QovexController@checkStatus');
 // You can also use auth middleware to prevent unauthenticated users
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/home', 'HomeController@index')->name('home');
+    Route::get('/blogs', 'BlogController@index')->name('blogs.index');
+    Route::get('/users', 'UserController@index')->name('users.index');
     Route::get('{any}', 'QovexController@index');
 });

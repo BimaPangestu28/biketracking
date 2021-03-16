@@ -119,7 +119,7 @@ $(document).ready(function () {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! F:\wamp\www\Work\Qovex\Laravel\resources\js\pages\datatables.init.js */"./resources/js/pages/datatables.init.js");
+module.exports = __webpack_require__(/*! /Users/macbook/Desktop/Projects/biketracking/admin/resources/js/pages/datatables.init.js */"./resources/js/pages/datatables.init.js");
 
 
 /***/ })

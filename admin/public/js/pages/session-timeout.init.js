@@ -101,14 +101,15 @@ Contact: themesbrand@gmail.com
 File: Session time 
 */
 $.sessionTimeout({
-	keepAliveUrl: 'login-status',
-	logoutButton:'Logout',
-	logoutUrl: 'logout',
-	redirUrl: 'logout',
-	warnAfter: 3000,
-	redirAfter: 30000,
-	countdownMessage: 'Redirecting in {timer} seconds.'
+  keepAliveUrl: 'login-status',
+  logoutButton: 'Logout',
+  logoutUrl: 'logout',
+  redirUrl: 'logout',
+  warnAfter: 3000,
+  redirAfter: 30000,
+  countdownMessage: 'Redirecting in {timer} seconds.'
 });
+
 /***/ }),
 
 /***/ 22:
@@ -118,7 +119,7 @@ $.sessionTimeout({
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! F:\wamp\www\Work\Qovex\Laravel\resources\js\pages\session-timeout.init.js */"./resources/js/pages/session-timeout.init.js");
+module.exports = __webpack_require__(/*! /Users/macbook/Desktop/Projects/biketracking/admin/resources/js/pages/session-timeout.init.js */"./resources/js/pages/session-timeout.init.js");
 
 
 /***/ })

@@ -725,13 +725,13 @@ chart.render();
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! F:\wamp\www\Work\Qovex\Laravel\resources\js\pages\apexcharts.init.js */"./resources/js/pages/apexcharts.init.js");
-__webpack_require__(/*! F:\wamp\www\Work\Qovex\Laravel\resources\scss\bootstrap.scss */"./resources/scss/bootstrap.scss");
-__webpack_require__(/*! F:\wamp\www\Work\Qovex\Laravel\resources\scss\bootstrap-dark.scss */"./resources/scss/bootstrap-dark.scss");
-__webpack_require__(/*! F:\wamp\www\Work\Qovex\Laravel\resources\scss\icons.scss */"./resources/scss/icons.scss");
-__webpack_require__(/*! F:\wamp\www\Work\Qovex\Laravel\resources\scss\app-rtl.scss */"./resources/scss/app-rtl.scss");
-__webpack_require__(/*! F:\wamp\www\Work\Qovex\Laravel\resources\scss\app.scss */"./resources/scss/app.scss");
-module.exports = __webpack_require__(/*! F:\wamp\www\Work\Qovex\Laravel\resources\scss\app-dark.scss */"./resources/scss/app-dark.scss");
+__webpack_require__(/*! /Users/macbook/Desktop/Projects/biketracking/admin/resources/js/pages/apexcharts.init.js */"./resources/js/pages/apexcharts.init.js");
+__webpack_require__(/*! /Users/macbook/Desktop/Projects/biketracking/admin/resources/scss/bootstrap.scss */"./resources/scss/bootstrap.scss");
+__webpack_require__(/*! /Users/macbook/Desktop/Projects/biketracking/admin/resources/scss/bootstrap-dark.scss */"./resources/scss/bootstrap-dark.scss");
+__webpack_require__(/*! /Users/macbook/Desktop/Projects/biketracking/admin/resources/scss/icons.scss */"./resources/scss/icons.scss");
+__webpack_require__(/*! /Users/macbook/Desktop/Projects/biketracking/admin/resources/scss/app-rtl.scss */"./resources/scss/app-rtl.scss");
+__webpack_require__(/*! /Users/macbook/Desktop/Projects/biketracking/admin/resources/scss/app.scss */"./resources/scss/app.scss");
+module.exports = __webpack_require__(/*! /Users/macbook/Desktop/Projects/biketracking/admin/resources/scss/app-dark.scss */"./resources/scss/app-dark.scss");
 
 
 /***/ })

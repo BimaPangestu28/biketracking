@@ -333,7 +333,7 @@ chart.render();
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! F:\wamp\www\Work\Qovex\Laravel\resources\js\pages\dashboard-2.init.js */"./resources/js/pages/dashboard-2.init.js");
+module.exports = __webpack_require__(/*! /Users/macbook/Desktop/Projects/biketracking/admin/resources/js/pages/dashboard-2.init.js */"./resources/js/pages/dashboard-2.init.js");
 
 
 /***/ })
