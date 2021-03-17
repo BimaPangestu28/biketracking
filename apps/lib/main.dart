@@ -16,6 +16,7 @@ void main() async {
   // Run app!
   runApp(new MaterialApp(
     title: 'App',
+    theme: ThemeData(primaryColor: Color(0xffD0D620)),
     // home: new SplashScreenPage(),
     home: new SplashScreenPage(),
     routes: <String, WidgetBuilder>{
