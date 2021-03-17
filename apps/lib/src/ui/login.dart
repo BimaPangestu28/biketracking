@@ -21,7 +21,7 @@ class _LoginPageState extends State<LoginPage> {
                 onPressed: () {
                   setState(() => this._status = 'loading');
 
-                  appAuth.facebookLogin();
+                  appAuth.login();
 
                   // appAuth.login().then((result) {
                   //   if (result) {
