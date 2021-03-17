@@ -17,18 +17,17 @@ class _SplashScreen extends State<SplashScreenPage> {
     startSplashScreen();
   }
 
-  startSplashScreen() async {
+  startSplashScreen() {
     final LocalStorage storage = new LocalStorage('pityu');
     var duration = const Duration(seconds: 1);
 
     // Get result of the login function.
     String redirectPath = "/login";
-    bool _result = await appAuth.login();
-    if (_result) {
+    if (storage.getItem('auth') != "null") {
       redirectPath = "/home";
     }
 
-    if (storage.getItem('showWalktrough') == null) {
+    if (storage.getItem('showWalktrough') == "null") {
       redirectPath = "/walktrough";
     }
 

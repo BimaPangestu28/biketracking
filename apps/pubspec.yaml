@@ -64,6 +64,7 @@ flutter:
     - assets/images/walktrough_2.png
     - assets/images/walktrough_3.png
     - assets/images/walktrough_4.png
+    - assets/images/background_login.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
