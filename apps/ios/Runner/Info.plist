@@ -42,6 +42,13 @@
 		<key>UIViewControllerBasedStatusBarAppearance</key>
 		<false/>
 
+		<!-- Permission Location -->
+		<key>NSLocationWhenInUseUsageDescription</key>
+		<string>This app requires access to your location for tracke your location.</string>
+		<key>NSLocationAlwaysUsageDescription</key>
+		<string>This app requires access to your location for tracke your location.</string>
+		<!-- Permission Location -->
+
 		<!-- Facebook Login -->
 		<key>CFBundleURLTypes</key>
 		<array>

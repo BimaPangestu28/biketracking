@@ -14,11 +14,11 @@ class HomeScreen extends State<HomePage> {
   int _currentIndex = 0;
   final List<Widget> _children = [
     HomeWidget(Colors.white),
-    TravelWidget(Colors.deepOrange),
+    TravelWidget(),
     ProfileWidget(Colors.green)
   ];
 
-  PageController _pageController;
+  PageController _pageController = PageController();
 
   @override
   void initState() {

@@ -3,14 +3,14 @@ import 'package:carousel_slider/carousel_options.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:localstorage/localstorage.dart';
 
-List<Object> list = [
+List<String> list = [
   "assets/images/walktrough_1.png",
   "assets/images/walktrough_2.png",
   "assets/images/walktrough_3.png",
   "assets/images/walktrough_4.png"
 ];
 
-List<Object> listTexts = [
+List<String> listTexts = [
   "Ketauhi kebutuhan kesehatan kamu dengan perjalan seru!",
   "Menjadikan masyarakat hidup lebih sehat",
   "Menjaga alam dengan mengurangi polusi dari asap kendaraan",
