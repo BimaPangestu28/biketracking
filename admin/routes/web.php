@@ -40,5 +40,5 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/home', 'HomeController@index')->name('home');
     Route::get('/blogs', 'BlogController@index')->name('blogs.index');
     Route::get('/users', 'UserController@index')->name('users.index');
-    Route::get('{any}', 'QovexController@index');
+    // Route::get('{any}', 'QovexController@index');
 });

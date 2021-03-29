@@ -54,7 +54,32 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     onPressed: () {
                       storage.setItem("auth", "true");
-                      Navigator.of(context).pushReplacementNamed("/home");
+                      Navigator.of(context).pushReplacementNamed("/login-form");
+                    },
+                  ),
+                ),
+                Container(
+                  margin: EdgeInsets.only(top: 20),
+                  child: ElevatedButton(
+                    style: ButtonStyle(
+                        shape:
+                            MaterialStateProperty.all<RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(50.0),
+                        )),
+                        backgroundColor:
+                            MaterialStateProperty.all(Color(0xff5CC6D0)),
+                        padding: MaterialStateProperty.all(EdgeInsets.symmetric(
+                            vertical: 15, horizontal: 100)),
+                        elevation: MaterialStateProperty.all(0)),
+                    child: Text(
+                      "Daftar",
+                      style: TextStyle(fontSize: 18, color: Color(0xffffffff)),
+                    ),
+                    onPressed: () {
+                      storage.setItem("auth", "true");
+                      Navigator.of(context)
+                          .pushReplacementNamed("/register-form");
                     },
                   ),
                 )

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_options.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:localstorage/localstorage.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 List<String> list = [
   "assets/images/walktrough_1.png",
@@ -23,14 +24,14 @@ class WalktroughPage extends StatefulWidget {
 }
 
 class WalktroughScreen extends State<WalktroughPage> {
-  final LocalStorage storage = new LocalStorage('pityu');
+  final storage = new FlutterSecureStorage();
 
   void initState() {
     super.initState();
   }
 
-  _toLoginPage() {
-    storage.setItem('showWalktrough', "false");
+  _toLoginPage() async {
+    await storage.write(key: "showWalktrough", value: "false");
     Navigator.of(context).pushReplacementNamed("/login");
   }
 

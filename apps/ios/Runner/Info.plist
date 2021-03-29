@@ -91,5 +91,11 @@
 			</dict>
 		</array>
 		<!-- Google Login -->
+
+		<key>NSAppTransportSecurity</key>
+		<dict>
+			<key>NSAllowsArbitraryLoads</key>
+			<true/>
+		</dict>
 	</dict>
 </plist>

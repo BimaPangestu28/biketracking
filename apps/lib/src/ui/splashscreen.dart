@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:localstorage/localstorage.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 import '../blocs/authentication_bloc.dart';
 
@@ -17,17 +17,20 @@ class _SplashScreen extends State<SplashScreenPage> {
     startSplashScreen();
   }
 
-  startSplashScreen() {
-    final LocalStorage storage = new LocalStorage('pityu');
+  startSplashScreen() async {
+    final storage = new FlutterSecureStorage();
     var duration = const Duration(seconds: 1);
+
+    final auth = await storage.read(key: "auth");
+    final showWalktrough = await storage.read(key: "showWalktrough");
 
     // Get result of the login function.
     String redirectPath = "/login";
-    if (storage.getItem('auth') != "null") {
+    if (auth != null) {
       redirectPath = "/home";
     }
 
-    if (storage.getItem('showWalktrough') == "null") {
+    if (showWalktrough == null || showWalktrough != "false") {
       redirectPath = "/walktrough";
     }
 
