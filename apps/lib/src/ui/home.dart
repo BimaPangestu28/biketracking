@@ -15,7 +15,7 @@ class HomeScreen extends State<HomePage> {
   final List<Widget> _children = [
     HomeWidget(Colors.white),
     TravelWidget(),
-    ProfileWidget(Colors.green)
+    ProfileWidget()
   ];
 
   PageController _pageController = PageController();

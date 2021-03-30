@@ -1,11 +1,15 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:image_picker/image_picker.dart';
 
 import 'dart:math' show cos, sqrt, asin;
+
+import '../../helpers/dialog.dart';
 
 class TravelWidget extends StatefulWidget {
   @override
@@ -38,7 +42,9 @@ class TravelWidgetState extends State<TravelWidget> {
 
   // Starting point latitude
   double _originLatitude = 0;
+  double _lastLatitude = 0;
   // Starting point longitude
+  double _lastLongitude = 0;
   double _originLongitude = 0;
   String distance = "0";
 
@@ -49,6 +55,7 @@ class TravelWidgetState extends State<TravelWidget> {
   Timer timer;
   bool startStop = true;
   String speed = "0.00";
+  List speedCollection = [];
 
   String elapsedTime = '00:00:00';
 
@@ -62,9 +69,16 @@ class TravelWidgetState extends State<TravelWidget> {
 
   startOrStop() async {
     if (startStop) {
-      setState(() {
-        start = true;
-      });
+      showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return CustomDialogBox(
+              title: "Custom Dialog Demo",
+              descriptions:
+                  "Hii all this is a custom dialog in flutter and  you will be use in your flutter applications",
+              text: "Yes",
+            );
+          });
 
       await Geolocator.getCurrentPosition(
               desiredAccuracy: LocationAccuracy.high)
@@ -72,6 +86,9 @@ class TravelWidgetState extends State<TravelWidget> {
         setState(() {
           _originLatitude = position.latitude;
           _originLongitude = position.longitude;
+          _lastLatitude = position.latitude;
+          _lastLongitude = position.longitude;
+          start = true;
         });
       }).catchError((e) {
         print(e);
@@ -79,8 +96,23 @@ class TravelWidgetState extends State<TravelWidget> {
 
       startWatch();
     } else {
-      setState(() {
-        start = false;
+      await Geolocator.getCurrentPosition(
+              desiredAccuracy: LocationAccuracy.high)
+          .then((Position position) async {
+        setState(() {
+          _originLatitude = position.latitude;
+          _originLongitude = position.longitude;
+          _lastLatitude = position.latitude;
+          _lastLongitude = position.longitude;
+          start = false;
+          polylines.clear();
+          polylineCoordinates = [];
+          hours = 0;
+          minutes = 0;
+          seconds = 0;
+        });
+      }).catchError((e) {
+        print(e);
       });
 
       stopWatch();
@@ -154,18 +186,17 @@ class TravelWidgetState extends State<TravelWidget> {
         .then((Position position) async {
       setState(() {
         _currentPosition = position;
-        final _distance = _coordinateDistance(_originLatitude, _originLongitude,
-                position.latitude, position.longitude)
-            .toStringAsFixed(3)
-            .toString();
-
-        print('CURRENT POS: $_currentPosition');
-        print('CURRENT SPEED: ' + _speed.toString()); // Meter per second
-        print('DISTANCE: ' + _distance);
+        final _distance = _coordinateDistance(_lastLatitude, _lastLongitude,
+            position.latitude, position.longitude);
 
         if (start) {
+          speedCollection.add(_speed);
           speed = _speed.toString();
-          distance = _distance;
+          distance = (double.parse(distance) + _distance)
+              .toStringAsFixed(2)
+              .toString();
+          _lastLatitude = position.latitude;
+          _lastLongitude = position.longitude;
         } else {
           speed = "0.00";
           distance = "0";
@@ -179,9 +210,13 @@ class TravelWidgetState extends State<TravelWidget> {
           ),
         );
       });
-      await _createPolylines(
-          Position(latitude: _originLatitude, longitude: _originLongitude),
-          Position(latitude: position.latitude, longitude: position.longitude));
+
+      if (start) {
+        await _createPolylines(
+            Position(latitude: _originLatitude, longitude: _originLongitude),
+            Position(
+                latitude: position.latitude, longitude: position.longitude));
+      }
     }).catchError((e) {
       print(e);
     });
@@ -201,23 +236,9 @@ class TravelWidgetState extends State<TravelWidget> {
   // Create the polylines for showing the route between two places
   _createPolylines(Position start, Position destination) async {
     polylinePoints = PolylinePoints();
-    PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
-      "AIzaSyDRf6O9hge6_RkX81e2D97xhZATYhuXKBM", // Google Maps API Key
-      PointLatLng(start.latitude, start.longitude),
-      PointLatLng(destination.latitude, destination.longitude),
-      travelMode: TravelMode.transit,
-    );
 
-    if (result.points.isNotEmpty) {
-      result.points.forEach((PointLatLng point) {
-        if (polylineCoordinates.length > 1) {
-          polylineCoordinates[1] = LatLng(point.latitude, point.longitude);
-        } else {
-          polylineCoordinates.add(LatLng(point.latitude, point.longitude));
-        }
-        print(polylineCoordinates);
-      });
-    }
+    polylineCoordinates
+        .add(LatLng(destination.latitude, destination.longitude));
 
     polylines = {};
 
@@ -229,7 +250,21 @@ class TravelWidgetState extends State<TravelWidget> {
       width: 3,
     );
     polylines[id] = polyline;
-    print(id);
+  }
+
+  File _image;
+  final picker = ImagePicker();
+
+  Future getImage() async {
+    final pickedFile = await picker.getImage(source: ImageSource.camera);
+
+    setState(() {
+      if (pickedFile != null) {
+        _image = File(pickedFile.path);
+      } else {
+        print('No image selected.');
+      }
+    });
   }
 
   @override
@@ -430,20 +465,41 @@ class TravelWidgetState extends State<TravelWidget> {
                     ],
                   ),
                 ),
-                ElevatedButton(
-                  onPressed: startOrStop,
-                  style: ButtonStyle(
-                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                          RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(50.0),
-                      )),
-                      backgroundColor:
-                          MaterialStateProperty.all(Color(0xff5CC6D0)),
-                      padding: MaterialStateProperty.all(
-                          EdgeInsets.symmetric(vertical: 15, horizontal: 100)),
-                      elevation: MaterialStateProperty.all(0)),
-                  child: Text(start ? "Berhenti" : "Start sekarang",
-                      style: TextStyle(fontSize: 18)),
+                Row(
+                  children: [
+                    GestureDetector(
+                      onTap: getImage,
+                      child: Container(
+                        width: 50.0,
+                        height: 50.0,
+                        decoration: new BoxDecoration(
+                            color: Colors.white,
+                            shape: BoxShape.circle,
+                            image: new DecorationImage(
+                                fit: BoxFit.scaleDown,
+                                image: AssetImage(
+                                    "assets/images/photo-camera-icon.png"))),
+                      ),
+                    ),
+                    Container(
+                      child: ElevatedButton(
+                        onPressed: startOrStop,
+                        style: ButtonStyle(
+                            shape: MaterialStateProperty.all<
+                                RoundedRectangleBorder>(RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(50.0),
+                            )),
+                            backgroundColor:
+                                MaterialStateProperty.all(Color(0xff5CC6D0)),
+                            padding: MaterialStateProperty.all(
+                                EdgeInsets.symmetric(
+                                    vertical: 15, horizontal: 50)),
+                            elevation: MaterialStateProperty.all(0)),
+                        child: Text(start ? "Berhenti" : "Start sekarang",
+                            style: TextStyle(fontSize: 18)),
+                      ),
+                    )
+                  ],
                 )
               ],
             )

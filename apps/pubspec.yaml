@@ -38,6 +38,8 @@ dependencies:
   equatable: ^2.0.0
   fluttertoast: ^8.0.3
   flutter_secure_storage: ^4.1.0
+  camera: ^0.8.1
+  image_picker: ^0.7.3
   # flutter_facebook_login: ^3.0.0
   # google_sign_in: ^5.0.0
   http: ^0.13.0
@@ -68,6 +70,8 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - .env
+    - assets/images/photo-camera-icon.png
+    - assets/images/man.png
     - assets/images/logo.png
     - assets/images/logo_home.png
     - assets/images/walktrough_1.png
