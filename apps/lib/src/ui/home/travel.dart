@@ -9,7 +9,7 @@ import 'package:image_picker/image_picker.dart';
 
 import 'dart:math' show cos, sqrt, asin;
 
-import '../../helpers/dialog.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 
 class TravelWidget extends StatefulWidget {
   @override
@@ -67,18 +67,61 @@ class TravelWidgetState extends State<TravelWidget> {
     }
   }
 
+  openAlert() {
+    if (!start) {
+      return Alert(
+          context: context,
+          title: "Pilih Perjalanan\nMenyenangkan Kamu",
+          content: Column(
+            children: <Widget>[
+              Row(
+                children: [
+                  Container(
+                    child: Column(
+                      children: [
+                        GestureDetector(
+                          onTap: () =>
+                              {startOrStop(), Navigator.of(context).pop()},
+                          child: Container(
+                            padding: const EdgeInsets.all(25),
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.all(10),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.grey.withOpacity(0.5),
+                                  spreadRadius: 5,
+                                  blurRadius: 7,
+                                  offset: Offset(
+                                      0, 3), // changes position of shadow
+                                ),
+                              ],
+                            ),
+                            child: Column(
+                              children: [
+                                Image(
+                                    image: AssetImage(
+                                        "assets/images/bycle_icon.png")),
+                                Text("Sepeda")
+                              ],
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                  )
+                ],
+              )
+            ],
+          )).show();
+    }
+  }
+
   startOrStop() async {
     if (startStop) {
-      showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return CustomDialogBox(
-              title: "Custom Dialog Demo",
-              descriptions:
-                  "Hii all this is a custom dialog in flutter and  you will be use in your flutter applications",
-              text: "Yes",
-            );
-          });
+      setState(() {
+        start = true;
+      });
 
       await Geolocator.getCurrentPosition(
               desiredAccuracy: LocationAccuracy.high)
@@ -88,8 +131,11 @@ class TravelWidgetState extends State<TravelWidget> {
           _originLongitude = position.longitude;
           _lastLatitude = position.latitude;
           _lastLongitude = position.longitude;
-          start = true;
         });
+
+        mapController.animateCamera(
+          CameraUpdate.zoomIn(),
+        );
       }).catchError((e) {
         print(e);
       });
@@ -466,24 +512,30 @@ class TravelWidgetState extends State<TravelWidget> {
                   ),
                 ),
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    GestureDetector(
-                      onTap: getImage,
-                      child: Container(
-                        width: 50.0,
-                        height: 50.0,
-                        decoration: new BoxDecoration(
-                            color: Colors.white,
-                            shape: BoxShape.circle,
-                            image: new DecorationImage(
-                                fit: BoxFit.scaleDown,
-                                image: AssetImage(
-                                    "assets/images/photo-camera-icon.png"))),
-                      ),
-                    ),
+                    Visibility(
+                        visible: start,
+                        child: Container(
+                          margin: EdgeInsets.only(right: 10),
+                          child: GestureDetector(
+                            onTap: getImage,
+                            child: Container(
+                              width: 50.0,
+                              height: 50.0,
+                              decoration: new BoxDecoration(
+                                  color: Colors.white,
+                                  shape: BoxShape.circle,
+                                  image: new DecorationImage(
+                                      fit: BoxFit.scaleDown,
+                                      image: AssetImage(
+                                          "assets/images/photo-camera-icon.png"))),
+                            ),
+                          ),
+                        )),
                     Container(
                       child: ElevatedButton(
-                        onPressed: startOrStop,
+                        onPressed: openAlert,
                         style: ButtonStyle(
                             shape: MaterialStateProperty.all<
                                 RoundedRectangleBorder>(RoundedRectangleBorder(
