@@ -72,21 +72,24 @@ class TravelWidgetState extends State<TravelWidget> {
       return Alert(
           context: context,
           title: "Pilih Perjalanan\nMenyenangkan Kamu",
+          buttons: [],
           content: Column(
             children: <Widget>[
               Row(
                 children: [
                   Container(
-                    child: Column(
+                    child: Row(
                       children: [
                         GestureDetector(
                           onTap: () =>
                               {startOrStop(), Navigator.of(context).pop()},
                           child: Container(
                             padding: const EdgeInsets.all(25),
+                            margin: EdgeInsets.all(20),
                             decoration: BoxDecoration(
                               color: Colors.white,
-                              borderRadius: BorderRadius.all(10),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(10)),
                               boxShadow: [
                                 BoxShadow(
                                   color: Colors.grey.withOpacity(0.5),
@@ -100,9 +103,55 @@ class TravelWidgetState extends State<TravelWidget> {
                             child: Column(
                               children: [
                                 Image(
-                                    image: AssetImage(
-                                        "assets/images/bycle_icon.png")),
-                                Text("Sepeda")
+                                  image: AssetImage(
+                                      "assets/images/bycle_icon.png"),
+                                  width: 50,
+                                ),
+                                Container(
+                                  margin: EdgeInsets.only(top: 10),
+                                  child: Text(
+                                    "Sepeda",
+                                    style: TextStyle(fontSize: 12),
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                        ),
+                        GestureDetector(
+                          onTap: () =>
+                              {startOrStop(), Navigator.of(context).pop()},
+                          child: Container(
+                            padding: const EdgeInsets.all(25),
+                            margin: EdgeInsets.all(20),
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(10)),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.grey.withOpacity(0.5),
+                                  spreadRadius: 5,
+                                  blurRadius: 7,
+                                  offset: Offset(
+                                      0, 3), // changes position of shadow
+                                ),
+                              ],
+                            ),
+                            child: Column(
+                              children: [
+                                Image(
+                                  image: AssetImage(
+                                      "assets/images/jogging_icon.png"),
+                                  width: 30,
+                                ),
+                                Container(
+                                  margin: EdgeInsets.only(top: 10),
+                                  child: Text(
+                                    "Berlari",
+                                    style: TextStyle(fontSize: 12),
+                                  ),
+                                )
                               ],
                             ),
                           ),
@@ -114,14 +163,170 @@ class TravelWidgetState extends State<TravelWidget> {
               )
             ],
           )).show();
+    } else {
+      return Alert(
+        context: context,
+        title: "Apakah kamu yakin\ningin memberhentikan\nperjalanan kamu?",
+        buttons: [
+          DialogButton(
+            child: Text(
+              "Iya",
+              style: TextStyle(color: Colors.white, fontSize: 14),
+            ),
+            onPressed: () =>
+                {startOrStop(), Navigator.pop(context), openDialogResult()},
+            color: Color.fromRGBO(0, 179, 134, 1.0),
+          ),
+          DialogButton(
+            child: Text(
+              "Tidak",
+              style: TextStyle(color: Colors.white, fontSize: 14),
+            ),
+            onPressed: () => Navigator.pop(context),
+            gradient: LinearGradient(colors: [
+              Color.fromRGBO(116, 116, 191, 1.0),
+              Color.fromRGBO(52, 138, 199, 1.0),
+            ]),
+          )
+        ],
+      ).show();
     }
+  }
+
+  openDialogResult() {
+    return Alert(
+      context: context,
+      title: "",
+      content: Column(
+        children: [
+          Text(
+            "Terimakasih\nKamu telah membuat awan menjadi lebih biru dengan bersepeda",
+            style: TextStyle(
+              fontSize: 14,
+            ),
+            textAlign: TextAlign.center,
+          ),
+          Column(
+            children: [
+              Container(
+                margin: EdgeInsets.only(top: 20),
+                child: Text(
+                  "Durasi Waktu",
+                  style: TextStyle(fontSize: 14),
+                ),
+              ),
+              Container(
+                margin: EdgeInsets.only(top: 5, bottom: 10),
+                child: Text(
+                  elapsedTime,
+                  style: TextStyle(fontSize: 14),
+                ),
+              ),
+              Container(
+                margin: EdgeInsets.only(bottom: 30, top: 10),
+                child: Row(
+                  children: [
+                    Expanded(
+                      flex: 4,
+                      child: Column(
+                        children: [
+                          Text(
+                            "Jarak \n (km)",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(fontSize: 14),
+                          ),
+                          Container(
+                              child: Text(
+                                distance,
+                                style: TextStyle(fontSize: 14),
+                                textAlign: TextAlign.center,
+                              ),
+                              margin: EdgeInsets.only(top: 5)),
+                        ],
+                      ),
+                    ),
+                    Expanded(
+                        child: Column(
+                          children: [
+                            Text(
+                              "Kilokalori \n (kkal)",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(fontSize: 14),
+                            ),
+                            Container(
+                                child: Text(
+                                  "0",
+                                  style: TextStyle(fontSize: 14),
+                                  textAlign: TextAlign.center,
+                                ),
+                                margin: EdgeInsets.only(top: 5)),
+                          ],
+                        ),
+                        flex: 4),
+                    Expanded(
+                      child: Column(
+                        children: [
+                          Text(
+                            "Kecepatan \n (m/jam)",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(fontSize: 14),
+                          ),
+                          Container(
+                              child: Text(
+                                speed,
+                                style: TextStyle(fontSize: 14),
+                                textAlign: TextAlign.center,
+                              ),
+                              margin: EdgeInsets.only(top: 5)),
+                        ],
+                      ),
+                      flex: 4,
+                    )
+                  ],
+                ),
+              ),
+            ],
+          ),
+          Container(
+            child: Text(
+              'Apakah kamu ingin membagikannya?',
+              style: TextStyle(
+                fontSize: 14,
+              ),
+              textAlign: TextAlign.center,
+            ),
+            margin: EdgeInsets.only(top: 10),
+          ),
+        ],
+      ),
+      buttons: [
+        DialogButton(
+          child: Text(
+            "Iya",
+            style: TextStyle(color: Colors.white, fontSize: 14),
+          ),
+          onPressed: () =>
+              {startOrStop(), Navigator.pop(context), openDialogResult()},
+          color: Color.fromRGBO(0, 179, 134, 1.0),
+        ),
+        DialogButton(
+          child: Text(
+            "Tidak",
+            style: TextStyle(color: Colors.white, fontSize: 14),
+          ),
+          onPressed: () => Navigator.pop(context),
+          gradient: LinearGradient(colors: [
+            Color.fromRGBO(116, 116, 191, 1.0),
+            Color.fromRGBO(52, 138, 199, 1.0),
+          ]),
+        )
+      ],
+    ).show();
   }
 
   startOrStop() async {
     if (startStop) {
-      setState(() {
-        start = true;
-      });
+      startWatch();
 
       await Geolocator.getCurrentPosition(
               desiredAccuracy: LocationAccuracy.high)
@@ -139,9 +344,9 @@ class TravelWidgetState extends State<TravelWidget> {
       }).catchError((e) {
         print(e);
       });
-
-      startWatch();
     } else {
+      stopWatch();
+
       await Geolocator.getCurrentPosition(
               desiredAccuracy: LocationAccuracy.high)
           .then((Position position) async {
@@ -150,7 +355,6 @@ class TravelWidgetState extends State<TravelWidget> {
           _originLongitude = position.longitude;
           _lastLatitude = position.latitude;
           _lastLongitude = position.longitude;
-          start = false;
           polylines.clear();
           polylineCoordinates = [];
           hours = 0;
@@ -160,14 +364,13 @@ class TravelWidgetState extends State<TravelWidget> {
       }).catchError((e) {
         print(e);
       });
-
-      stopWatch();
     }
   }
 
   startWatch() {
     setState(() {
       startStop = false;
+      start = true;
       watch.start();
       timer = Timer.periodic(Duration(milliseconds: 100), updateTime);
     });
@@ -176,6 +379,7 @@ class TravelWidgetState extends State<TravelWidget> {
   stopWatch() {
     setState(() {
       startStop = true;
+      start = false;
       watch.stop();
       setTime();
     });
