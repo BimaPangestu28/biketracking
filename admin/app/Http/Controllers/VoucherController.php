@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Voucher;
+use App\Models\Voucher;
 use Illuminate\Http\Request;
 
 class VoucherController extends Controller
@@ -14,7 +14,9 @@ class VoucherController extends Controller
      */
     public function index()
     {
-        //
+        $vouchers = Voucher::all();
+
+        return view('pages.vouchers.index', compact('vouchers'));
     }
 
     /**

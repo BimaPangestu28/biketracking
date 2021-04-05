@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Merchant;
+use App\Models\Merchant;
 use Illuminate\Http\Request;
 
 class MerchantController extends Controller
@@ -14,7 +14,9 @@ class MerchantController extends Controller
      */
     public function index()
     {
-        //
+        $merchants = Merchant::all();
+
+        return view('pages.merchants.index', compact('merchants'));
     }
 
     /**

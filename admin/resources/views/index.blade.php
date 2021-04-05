@@ -6,7 +6,7 @@
 
 @component('common-components.breadcrumb')
 @slot('title') Dashboard @endslot
-@slot('title_li') Welcome to Qovex Dashboard @endslot
+@slot('title_li') Welcome to Pityu Dashboard @endslot
 @endcomponent
 
 <div class="row">

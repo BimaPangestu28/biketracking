@@ -1,6 +1,6 @@
 @extends('layouts.master')
 
-@section('title') Data Tables @endsection
+@section('title') Pengelolaan Pengguna @endsection
 @section('css')
 
 <!-- DataTables -->
@@ -11,8 +11,8 @@
 @section('content')
 
 @component('common-components.breadcrumb')
-@slot('title') Data Tables @endslot
-@slot('li_1') Tables @endslot
+@slot('title') Pengguna @endslot
+@slot('li_1') Pengelolaan @endslot
 @endcomponent
 
 <div class="row">
@@ -20,31 +20,31 @@
         <div class="card">
             <div class="card-body">
 
-                <h4 class="card-title">Default Datatable</h4>
-                <p class="card-title-desc">DataTables has most features enabled by default, so all you need to do to use it with your own tables is to call the construction function: <code>$().DataTable();</code>.
+                <h4 class="card-title">Pengelolaan Pengguna</h4>
+                <p class="card-title-desc">Disini kamu bisa mengelola pengguna yang telah mendaftar pada aplikasi Pityu
                 </p>
 
                 <table id="datatable" class="table table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                     <thead>
                         <tr>
+                            <th>Merchant</th>
                             <th>Name</th>
-                            <th>Position</th>
-                            <th>Office</th>
-                            <th>Age</th>
-                            <th>Start date</th>
-                            <th>Salary</th>
+                            <th>Image</th>
+                            <th>Point Redeem</th>
+                            <th>Valid Until</th>
                         </tr>
                     </thead>
 
                     <tbody>
+                        @foreach($vouchers as $voucher)
                         <tr>
-                            <td>Tiger Nixon</td>
-                            <td>System Architect</td>
-                            <td>Edinburgh</td>
-                            <td>61</td>
-                            <td>2011/04/25</td>
-                            <td>$320,800</td>
+                            <td>{{ $voucher->merchant->name }}</td>
+                            <td>{{ $voucher->name }}</td>
+                            <td><img src="{{ $voucher->image }}" alt="Voucher"></td>
+                            <td>{{ $voucher->point_redeem }}</td>
+                            <td>{{ $voucher->valid_until }}</td>
                         </tr>
+                        @endforeach
                     </tbody>
                 </table>
 

@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Trip;
+use App\UserPointHistory;
 use Illuminate\Http\Request;
 
-class TripController extends Controller
+class UserPointHistoryController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,9 +14,7 @@ class TripController extends Controller
      */
     public function index()
     {
-        $trips = Trip::all();
-
-        return view('pages.trips.index', compact('trips'));
+        //
     }
 
     /**
@@ -43,10 +41,10 @@ class TripController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Trip  $trip
+     * @param  \App\UserPointHistory  $userPointHistory
      * @return \Illuminate\Http\Response
      */
-    public function show(Trip $trip)
+    public function show(UserPointHistory $userPointHistory)
     {
         //
     }
@@ -54,10 +52,10 @@ class TripController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Trip  $trip
+     * @param  \App\UserPointHistory  $userPointHistory
      * @return \Illuminate\Http\Response
      */
-    public function edit(Trip $trip)
+    public function edit(UserPointHistory $userPointHistory)
     {
         //
     }
@@ -66,10 +64,10 @@ class TripController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Trip  $trip
+     * @param  \App\UserPointHistory  $userPointHistory
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Trip $trip)
+    public function update(Request $request, UserPointHistory $userPointHistory)
     {
         //
     }
@@ -77,10 +75,10 @@ class TripController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Trip  $trip
+     * @param  \App\UserPointHistory  $userPointHistory
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Trip $trip)
+    public function destroy(UserPointHistory $userPointHistory)
     {
         //
     }
