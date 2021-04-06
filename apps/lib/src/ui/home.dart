@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 import './home/profile.dart';
 import './home/home.dart';
@@ -11,7 +12,9 @@ class HomePage extends StatefulWidget {
 }
 
 class HomeScreen extends State<HomePage> {
+  final storage = new FlutterSecureStorage();
   int _currentIndex = 0;
+
   final List<Widget> _children = [
     HomeWidget(Colors.white),
     TravelWidget(),
@@ -40,6 +43,47 @@ class HomeScreen extends State<HomePage> {
     });
   }
 
+  logout() {
+    storage.delete(key: "auth");
+    Navigator.of(context).pushReplacementNamed("/login");
+  }
+
+  getIconTopBar() {
+    if (_currentIndex == 2) {
+      return GestureDetector(
+        onTap: logout,
+        child: Row(
+          children: [
+            GestureDetector(
+              child: Icon(CupertinoIcons.arrow_right_square),
+            ),
+            Container(
+              margin: EdgeInsets.only(left: 7.5),
+              child: Text(
+                "Keluar",
+                style: TextStyle(fontSize: 14),
+              ),
+            )
+          ],
+        ),
+      );
+    } else {
+      return Row(
+        children: [
+          GestureDetector(
+            child: Icon(CupertinoIcons.chat_bubble_text_fill),
+          ),
+          GestureDetector(
+            child: Container(
+              margin: EdgeInsets.only(left: 15),
+              child: Icon(CupertinoIcons.bell_fill),
+            ),
+          )
+        ],
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) => new Scaffold(
         appBar: new AppBar(
@@ -52,19 +96,7 @@ class HomeScreen extends State<HomePage> {
                 // height: 25,
                 width: 70,
               ),
-              Row(
-                children: [
-                  GestureDetector(
-                    child: Icon(CupertinoIcons.chat_bubble_text_fill),
-                  ),
-                  GestureDetector(
-                    child: Container(
-                      margin: EdgeInsets.only(left: 15),
-                      child: Icon(CupertinoIcons.bell_fill),
-                    ),
-                  )
-                ],
-              )
+              getIconTopBar()
             ],
           ),
         ),

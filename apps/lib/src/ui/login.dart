@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:localstorage/localstorage.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -7,7 +7,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  final LocalStorage storage = new LocalStorage('pityu');
+  final storage = new FlutterSecureStorage();
 
   @override
   Widget build(BuildContext context) => new Scaffold(
@@ -53,7 +53,7 @@ class _LoginPageState extends State<LoginPage> {
                       style: TextStyle(fontSize: 18, color: Color(0xffffffff)),
                     ),
                     onPressed: () {
-                      storage.setItem("auth", "true");
+                      storage.write(key: "auth", value: "true");
                       Navigator.of(context).pushReplacementNamed("/login-form");
                     },
                   ),
@@ -77,7 +77,6 @@ class _LoginPageState extends State<LoginPage> {
                       style: TextStyle(fontSize: 18, color: Color(0xffffffff)),
                     ),
                     onPressed: () {
-                      storage.setItem("auth", "true");
                       Navigator.of(context)
                           .pushReplacementNamed("/register-form");
                     },

@@ -16,6 +16,7 @@ use \App\Libs\Response as Response;
 use App\Models\TripCategory;
 use App\Models\TripCoordinate;
 use App\Models\TripSpeed;
+use App\User;
 
 class TripApiController extends Controller
 {
@@ -90,5 +91,27 @@ class TripApiController extends Controller
         ]);
 
         return $this->response->success_response("success save speed", $speed, 200);
+    }
+
+    public function finish(Request $request, $id) {
+        $trip = Trip::where(['id' => $id])->update([
+            "end" => \Carbon\Carbon::now(),
+            "distance" => $request->distance,
+            "time" => $request->time,
+        ]);
+
+        User::where(['id' => Auth::user()->id])->update([
+            "point" => Auth::user()->point + round($request->distance)
+        ]);
+
+        $data = [
+            "trip" => $trip,
+            "fuel" => [
+                "bike" => 0.2,
+                "car" => 0.2,
+            ]
+        ]
+
+        return $this->response->success_response("success finish trip", $trip, 200);
     }
 }

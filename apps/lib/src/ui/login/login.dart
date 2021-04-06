@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:localstorage/localstorage.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 import '../../blocs/authentication_bloc.dart';
 
@@ -11,7 +11,7 @@ class LoginFormPage extends StatefulWidget {
 }
 
 class _LoginFormPageState extends State<LoginFormPage> {
-  final LocalStorage storage = new LocalStorage('pityu');
+  final storage = new FlutterSecureStorage();
 
   TextEditingController emailController = new TextEditingController();
   TextEditingController passwordController = new TextEditingController();

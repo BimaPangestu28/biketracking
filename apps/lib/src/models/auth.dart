@@ -1,5 +1,3 @@
-import 'package:equatable/equatable.dart';
-
 class Auth {
   final String token;
   final String name;
