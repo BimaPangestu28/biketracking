@@ -69,6 +69,7 @@ class AuthenticationBloc {
   }
 
   Future<void> logout() async {
+    storage.delete(key: "auth");
     return await new Future<void>.delayed(new Duration(seconds: 2));
   }
 }

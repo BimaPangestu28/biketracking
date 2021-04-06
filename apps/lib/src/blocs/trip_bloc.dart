@@ -13,19 +13,34 @@ class TripBloc {
       ? env['PROD_BASE_URL']
       : env['DEV_BASE_URL'];
 
-  // Login Fucntion
+  // Start Fucntion
   Future<bool> start(context, data) async {
-    final url = Uri.parse('$_baseUrl/trips/start');
+    final url = Uri.parse('$_baseUrl/login');
     final response = await http.post(url, body: data);
 
-    // final responeJson = json.decode(response.body);
+    final responeJson = json.decode(response.body);
+    final name = responeJson['success']['name'];
 
     if (response.statusCode != 200) {
-      Utils.displayToast("Terjadi masalah pada server");
+      Utils.displayToast("Terjadi kesalahan pada server");
       throw new Exception('error');
     }
 
-    Utils.displayToast("Perjalanan kamu telah dimulai");
+    return true;
+  }
+
+  // Start Fucntion
+  Future<bool> getCategories() async {
+    final url = Uri.parse('$_baseUrl/trips/categories');
+    final response = await http.get(url);
+    print(url);
+    print(json.decode(response.body));
+    final responeJson = json.decode(response.body);
+
+    if (response.statusCode != 200) {
+      Utils.displayToast("Terjadi kesalahan pada server");
+      throw new Exception('error');
+    }
 
     return true;
   }

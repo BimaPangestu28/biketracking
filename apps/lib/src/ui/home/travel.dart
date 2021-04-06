@@ -11,6 +11,10 @@ import 'dart:math' show cos, sqrt, asin;
 
 import 'package:rflutter_alert/rflutter_alert.dart';
 
+import '../../blocs/trip_bloc.dart';
+
+TripBloc appTrip = new TripBloc();
+
 class TravelWidget extends StatefulWidget {
   @override
   TravelWidgetState createState() => TravelWidgetState();
@@ -520,6 +524,9 @@ class TravelWidgetState extends State<TravelWidget> {
   @override
   void initState() {
     super.initState();
+
+    print(appTrip.getCategories());
+
     _getCurrentLocation({});
   }
 

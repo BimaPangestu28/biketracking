@@ -93,7 +93,8 @@ class TripApiController extends Controller
         return $this->response->success_response("success save speed", $speed, 200);
     }
 
-    public function finish(Request $request, $id) {
+    public function finish(Request $request, $id)
+    {
         $trip = Trip::where(['id' => $id])->update([
             "end" => \Carbon\Carbon::now(),
             "distance" => $request->distance,
@@ -110,7 +111,7 @@ class TripApiController extends Controller
                 "bike" => 0.2,
                 "car" => 0.2,
             ]
-        ]
+        ];
 
         return $this->response->success_response("success finish trip", $trip, 200);
     }
