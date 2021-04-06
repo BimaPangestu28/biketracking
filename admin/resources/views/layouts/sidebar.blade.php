@@ -38,6 +38,13 @@
                 </li>
 
                 <li>
+                    <a href="{{ route('trips.categories.index') }}" class=" waves-effect">
+                        <i class="fas fa-route"></i>
+                        <span>Trip Category</span>
+                    </a>
+                </li>
+
+                <li>
                     <a href="{{ route('merchants.index') }}" class=" waves-effect">
                         <i class="fas fa-store"></i>
                         <span>Merchant</span>

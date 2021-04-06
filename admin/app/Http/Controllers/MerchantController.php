@@ -26,7 +26,7 @@ class MerchantController extends Controller
      */
     public function create()
     {
-        //
+        return view('pages.merchants.create');
     }
 
     /**

@@ -19,10 +19,23 @@
     <div class="col-12">
         <div class="card">
             <div class="card-body">
-
-                <h4 class="card-title">Pengelolaan Pengguna</h4>
-                <p class="card-title-desc">Disini kamu bisa mengelola pengguna yang telah mendaftar pada aplikasi Pityu
-                </p>
+                <div class="col-12">
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="row">
+                                <h4 class="card-title">Pengelolaan Merchant</h4>
+                                <p class="card-title-desc">Disini kamu bisa mengelola merchant yang telah mendaftar pada aplikasi Pityu</p>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="row float-right">
+                                <a href="{{ route('merchants.create') }}">
+                                    <button class="btn btn-primary">Tambah Merchant</button>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
                 <table id="datatable" class="table table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                     <thead>

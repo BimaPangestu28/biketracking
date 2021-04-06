@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Trip extends Model
 {
+    protected $fillable = ['user_id', 'category_id', 'start', 'end', 'distance', 'time'];
+
     public function user()
     {
         return $this->belongsTo(User::class);
@@ -13,6 +15,6 @@ class Trip extends Model
 
     public function category()
     {
-        return $this->belongsTo(TripCateghory::class);
+        return $this->belongsTo(TripCategory::class);
     }
 }

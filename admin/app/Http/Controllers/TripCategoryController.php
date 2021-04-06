@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\TripCategory;
+use Illuminate\Support\Str;
+
+use App\Models\TripCategory as TripCategory;
 use Illuminate\Http\Request;
 
 class TripCategoryController extends Controller
@@ -14,7 +16,9 @@ class TripCategoryController extends Controller
      */
     public function index()
     {
-        //
+        $categories = TripCategory::all();
+
+        return view('pages.trips.categories.index', compact('categories'));
     }
 
     /**
@@ -24,7 +28,7 @@ class TripCategoryController extends Controller
      */
     public function create()
     {
-        //
+        return view('pages.trips.categories.create');
     }
 
     /**
@@ -35,7 +39,26 @@ class TripCategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'image' => 'required|file|image|mimes:jpeg,png,jpg|max:2048',
+            'name' => 'required',
+        ]);
+
+        $image = $request->file('image');
+
+        $nama_image = Str::slug($request->name) . $image->getClientOriginalName();
+
+        $tujuan_upload = 'images/category';
+        $image->move($tujuan_upload, $nama_image);
+
+        $request->image = $tujuan_upload . "/" . $nama_image;
+
+        $category = TripCategory::create([
+            "name" => $request->name,
+            "image" => $request->image,
+        ]);
+
+        return redirect()->route('trips.categories.index');
     }
 
     /**
@@ -78,8 +101,10 @@ class TripCategoryController extends Controller
      * @param  \App\TripCategory  $tripCategory
      * @return \Illuminate\Http\Response
      */
-    public function destroy(TripCategory $tripCategory)
+    public function destroy(TripCategory $tripCategory, $id)
     {
-        //
+        TripCategory::where(['id' => $id])->delete();
+
+        return redirect()->route('trips.categories.index');
     }
 }

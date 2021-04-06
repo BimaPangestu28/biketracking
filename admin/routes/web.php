@@ -40,8 +40,23 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/home', 'HomeController@index')->name('home');
     Route::get('/blogs', 'BlogController@index')->name('blogs.index');
     Route::get('/users', 'UserController@index')->name('users.index');
-    Route::get('/trips', 'TripController@index')->name('trips.index');
-    Route::get('/merchants', 'MerchantController@index')->name('merchants.index');
+
+    Route::group(['prefix' => 'trips'], function () {
+        Route::get('/', 'TripController@index')->name('trips.index');
+
+        Route::group(['prefix' => 'categories'], function () {
+            Route::get('/', 'TripCategoryController@index')->name('trips.categories.index');
+            Route::delete('/{id}/delete', 'TripCategoryController@destroy')->name('trips.categories.delete');
+            Route::get('/create', 'TripCategoryController@create')->name('trips.categories.create');
+            Route::post('/store', 'TripCategoryController@store')->name('trips.categories.store');
+        });
+    });
+
+    Route::group(['prefix' => '/merchants'], function () {
+        Route::get('/', 'MerchantController@index')->name('merchants.index');
+        Route::get('/create', 'MerchantController@create')->name('merchants.create');
+    });
+
     Route::get('/vouchers', 'VoucherController@index')->name('vouchers.index');
-    Route::get('{any}', 'QovexController@index');
+    // Route::get('{any}', 'QovexController@index');
 });
