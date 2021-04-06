@@ -1,8 +1,8 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.example.flutter_application_1">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.pityu.app">
   <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
   <uses-permission android:name="android.permission.INTERNET" />
 
-  <application android:label="flutter_application_1" android:icon="@mipmap/ic_launcher" android:usesCleartextTraffic="true">
+  <application android:label="pityu" android:icon="@mipmap/ic_launcher" android:usesCleartextTraffic="true">
     <meta-data android:name="com.google.android.geo.API_KEY" android:value="AIzaSyDRf6O9hge6_RkX81e2D97xhZATYhuXKBM"/>
 
     <activity android:name=".MainActivity" android:launchMode="singleTop" android:theme="@style/LaunchTheme" android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode" android:hardwareAccelerated="true" android:windowSoftInputMode="adjustResize">

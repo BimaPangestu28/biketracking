@@ -19,10 +19,42 @@
       <sourceFolder url="file://$MODULE_DIR$/gen" isTestSource="false" generated="true" />
       <excludeFolder url="file://$MODULE_DIR$/apps/.pub" />
       <excludeFolder url="file://$MODULE_DIR$/apps/build" />
+      <excludeFolder url="file://$MODULE_DIR$/apps/ios/.symlinks/plugins/camera/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/apps/ios/.symlinks/plugins/camera/build" />
+      <excludeFolder url="file://$MODULE_DIR$/apps/ios/.symlinks/plugins/camera/example/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/apps/ios/.symlinks/plugins/camera/example/build" />
+      <excludeFolder url="file://$MODULE_DIR$/apps/ios/.symlinks/plugins/flutter_secure_storage/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/apps/ios/.symlinks/plugins/flutter_secure_storage/build" />
+      <excludeFolder url="file://$MODULE_DIR$/apps/ios/.symlinks/plugins/flutter_secure_storage/example/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/apps/ios/.symlinks/plugins/flutter_secure_storage/example/build" />
+      <excludeFolder url="file://$MODULE_DIR$/apps/ios/.symlinks/plugins/fluttertoast/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/apps/ios/.symlinks/plugins/fluttertoast/build" />
+      <excludeFolder url="file://$MODULE_DIR$/apps/ios/.symlinks/plugins/fluttertoast/example/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/apps/ios/.symlinks/plugins/fluttertoast/example/build" />
+      <excludeFolder url="file://$MODULE_DIR$/apps/ios/.symlinks/plugins/geocoding/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/apps/ios/.symlinks/plugins/geocoding/build" />
+      <excludeFolder url="file://$MODULE_DIR$/apps/ios/.symlinks/plugins/geocoding/example/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/apps/ios/.symlinks/plugins/geocoding/example/build" />
+      <excludeFolder url="file://$MODULE_DIR$/apps/ios/.symlinks/plugins/geolocator/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/apps/ios/.symlinks/plugins/geolocator/build" />
+      <excludeFolder url="file://$MODULE_DIR$/apps/ios/.symlinks/plugins/geolocator/example/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/apps/ios/.symlinks/plugins/geolocator/example/build" />
       <excludeFolder url="file://$MODULE_DIR$/apps/ios/.symlinks/plugins/google_maps_flutter/.pub" />
       <excludeFolder url="file://$MODULE_DIR$/apps/ios/.symlinks/plugins/google_maps_flutter/build" />
       <excludeFolder url="file://$MODULE_DIR$/apps/ios/.symlinks/plugins/google_maps_flutter/example/.pub" />
       <excludeFolder url="file://$MODULE_DIR$/apps/ios/.symlinks/plugins/google_maps_flutter/example/build" />
+      <excludeFolder url="file://$MODULE_DIR$/apps/ios/.symlinks/plugins/image_picker/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/apps/ios/.symlinks/plugins/image_picker/build" />
+      <excludeFolder url="file://$MODULE_DIR$/apps/ios/.symlinks/plugins/image_picker/example/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/apps/ios/.symlinks/plugins/image_picker/example/build" />
+      <excludeFolder url="file://$MODULE_DIR$/apps/ios/.symlinks/plugins/path_provider/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/apps/ios/.symlinks/plugins/path_provider/build" />
+      <excludeFolder url="file://$MODULE_DIR$/apps/ios/.symlinks/plugins/path_provider/example/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/apps/ios/.symlinks/plugins/path_provider/example/build" />
+      <excludeFolder url="file://$MODULE_DIR$/apps/ios/.symlinks/plugins/url_launcher/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/apps/ios/.symlinks/plugins/url_launcher/build" />
+      <excludeFolder url="file://$MODULE_DIR$/apps/ios/.symlinks/plugins/url_launcher/example/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/apps/ios/.symlinks/plugins/url_launcher/example/build" />
     </content>
     <orderEntry type="jdk" jdkName="Android API 30 Platform" jdkType="Android SDK" />
     <orderEntry type="sourceFolder" forTests="false" />

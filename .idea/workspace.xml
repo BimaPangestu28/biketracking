@@ -2,7 +2,17 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4b216ebc-1a2a-4694-8f61-fa1fb4cda898" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/apps/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/apps/lib/main.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/apps/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/android/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/apps/android/app/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/android/app/src/debug/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/apps/android/app/src/debug/AndroidManifest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/android/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/apps/android/app/src/main/AndroidManifest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/android/app/src/main/kotlin/com/example/flutter_application_1/MainActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/apps/android/app/src/main/kotlin/com/example/flutter_application_1/MainActivity.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/android/app/src/profile/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/apps/android/app/src/profile/AndroidManifest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/ios/Runner.xcodeproj/project.pbxproj" beforeDir="false" afterPath="$PROJECT_DIR$/apps/ios/Runner.xcodeproj/project.pbxproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/ios/Runner/Info.plist" beforeDir="false" afterPath="$PROJECT_DIR$/apps/ios/Runner/Info.plist" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/apps/pubspec.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/web/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/apps/web/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/web/manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/apps/web/manifest.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
