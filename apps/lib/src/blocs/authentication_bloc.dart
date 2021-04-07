@@ -57,10 +57,13 @@ class AuthenticationBloc {
       try {
         Utils.displayToast(responeJson["name"][0]);
       } catch (e) {}
+
+      return false;
     }
 
     if (response.statusCode != 200) {
-      throw new Exception('error');
+      Utils.displayToast("E-mail atau password salah");
+      return false;
     }
 
     Utils.displayToast("Selamat! Akun mu berhasil didaftarkan");

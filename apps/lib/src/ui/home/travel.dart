@@ -527,6 +527,8 @@ class TravelWidgetState extends State<TravelWidget> {
   _getCategories() async {
     dynamic categoriesData = await appTrip.getCategories();
 
+    print(categoriesData);
+
     setState(() {
       categories = categoriesData;
     });
@@ -598,7 +600,7 @@ class TravelWidgetState extends State<TravelWidget> {
               width: MediaQuery.of(context)
                   .size
                   .width, // or use fixed size like 200
-              height: MediaQuery.of(context).size.height * .3,
+              height: MediaQuery.of(context).size.height * .4,
               child: Stack(
                 children: [
                   // Map View

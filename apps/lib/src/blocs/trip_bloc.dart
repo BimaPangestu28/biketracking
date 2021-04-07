@@ -43,7 +43,7 @@ class TripBloc {
       return json.decode(response.body)['data'];
     } catch (e) {
       Utils.displayToast("Terjadi kesalahan pada server");
-      return false;
+      return [];
     }
   }
 
