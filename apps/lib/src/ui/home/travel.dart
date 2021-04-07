@@ -406,19 +406,6 @@ class TravelWidgetState extends State<TravelWidget> {
       _positionStreamSubscription?.cancel();
       _positionStreamSubscription = null;
     }).listen((position) => {this._getCurrentLocation(position.speed)});
-    // _positionStreamSubscription?.pause();
-
-    // new Future.delayed(const Duration(seconds: 1), () {
-    //   mapController.animateCamera(
-    //     CameraUpdate.newCameraPosition(
-    //       CameraPosition(
-    //         target:
-    //             LatLng(_currentPosition.latitude, _currentPosition.longitude),
-    //         zoom: 18.0,
-    //       ),
-    //     ),
-    //   );
-    // });
   }
 
   // Method for retrieving the current location

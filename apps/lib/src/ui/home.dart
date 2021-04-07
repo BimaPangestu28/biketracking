@@ -13,33 +13,33 @@ class HomePage extends StatefulWidget {
 
 class HomeScreen extends State<HomePage> {
   final storage = new FlutterSecureStorage();
-  int _currentIndex = 0;
+  int _currentIndex = 1;
 
   final List<Widget> _children = [
     HomeWidget(Colors.white),
     TravelWidget(),
-    ProfileWidget()
+    ProfileWidget(),
   ];
 
-  PageController _pageController = PageController();
+  // PageController _pageController = PageController();
 
   @override
   void initState() {
     super.initState();
-    _pageController = PageController();
+    // _pageController = PageController();
   }
 
   @override
   void dispose() {
-    _pageController.dispose();
+    // _pageController.dispose();
     super.dispose();
   }
 
   void onTabTapped(int index) {
     setState(() {
       _currentIndex = index;
-      _pageController.animateToPage(index,
-          duration: Duration(milliseconds: 500), curve: Curves.easeOut);
+      // _pageController.animateToPage(index,
+      //     duration: Duration(milliseconds: 500), curve: Curves.easeOut);
     });
   }
 
@@ -101,15 +101,16 @@ class HomeScreen extends State<HomePage> {
           ),
         ),
         // body: _children[_currentIndex],
-        body: SizedBox.expand(
-          child: PageView(
-            controller: _pageController,
-            onPageChanged: (index) {
-              setState(() => _currentIndex = index);
-            },
-            children: _children,
-          ),
-        ),
+        // body: SizedBox.expand(
+        //   child: PageView(
+        //     controller: _pageController,
+        //     onPageChanged: (index) {
+        //       setState(() => _currentIndex = index);
+        //     },
+        //     children: _children,
+        //   ),
+        // ),
+        body: _children[_currentIndex],
         bottomNavigationBar: BottomNavigationBar(
           onTap: onTabTapped,
           currentIndex: _currentIndex,
