@@ -24,7 +24,7 @@
                 <li class="menu-title">Menu</li>
 
                 <li>
-                    <a href="index" class="waves-effect">
+                    <a href="{{ route('dashboard') }}" class="waves-effect">
                         <i class="mdi mdi-airplay"></i>
                         <span>Dashboard</span>
                     </a>

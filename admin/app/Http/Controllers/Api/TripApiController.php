@@ -8,14 +8,13 @@ use Intervention\Image\ImageManagerStatic as Image;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
 
-use App\Models\TripCategory as Category;
-use App\Models\Trip;
-use App\Models\TripPhoto as Photo;
+use App\TripCategory as Category;
+use App\Trip;
+use App\TripPhoto as Photo;
 
 use \App\Libs\Response as Response;
-use App\Models\TripCategory;
-use App\Models\TripCoordinate;
-use App\Models\TripSpeed;
+use App\TripCoordinate;
+use App\TripSpeed;
 use App\User;
 
 class TripApiController extends Controller

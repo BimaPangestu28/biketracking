@@ -25,67 +25,105 @@
             <div class="col-xl-4">
                 <label for="">&nbsp;</label>
                 <div>
-                    <button class="btn btn-primary form-control">Filter berdasarkan rentang tanggal</button>
+                    <button id="filter" class="btn btn-primary form-control">Filter berdasarkan rentang tanggal</button>
                 </div>
             </div>
         </div>
     </div>
 
     <div class="col-xl-3">
-
-        @component('common-components.dashboard-widget')
-
-        @slot('title') Total Pengguna @endslot
-        @slot('iconClass') mdi mdi-account-multiple-outline @endslot
-        @slot('price') {{ $total_users }} @endslot
-        @slot('percentage') 0.28% @endslot
-        @slot('pClass') progress-bar bg-primary @endslot
-        @slot('pValue') 62 @endslot
-
-        @endcomponent
-
+        <div class="card">
+            <div class="card-body">
+                <div class="media">
+                    <div class="avatar-sm font-size-20 mr-3">
+                        <span class="avatar-title bg-soft-primary text-primary rounded">
+                            <i class="mdi mdi-account-multiple-outline"></i>
+                        </span>
+                    </div>
+                    <div class="media-body">
+                        <div class="font-size-16 mt-2">Total Pengguna</div>
+                    </div>
+                </div>
+                <h4 class="mt-4" id="total-user">{{ $total_users }}</h4>
+                <div class="row">
+                    <div class="col-7">
+                        <!-- <p class="mb-0"><span class="text-success mr-2">0.28%<i class="mdi mdi-arrow-up"></i> </span></p> -->
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <div class="col-xl-3">
-        @component('common-components.dashboard-widget')
-
-        @slot('title') Total Perjalanan @endslot
-        @slot('iconClass') mdi mdi-account-multiple-outline @endslot
-        @slot('price') {{ $total_trips }} @endslot
-        @slot('percentage') 0.16% @endslot
-        @slot('pClass') progress-bar bg-success @endslot
-        @slot('pValue') 62 @endslot
-
-        @endcomponent
+        <div class="card">
+            <div class="card-body">
+                <div class="media">
+                    <div class="avatar-sm font-size-20 mr-3">
+                        <span class="avatar-title bg-soft-primary text-primary rounded">
+                            <i class="mdi mdi-account-multiple-outline"></i>
+                        </span>
+                    </div>
+                    <div class="media-body">
+                        <div class="font-size-16 mt-2">Total Perjalanan</div>
+                    </div>
+                </div>
+                <h4 class="mt-4" id="total-user"><span id="total-trip">{{ $total_trips }}</span></h4>
+                <div class="row">
+                    <div class="col-7">
+                        <!-- <p class="mb-0"><span class="text-success mr-2">0.28%<i class="mdi mdi-arrow-up"></i> </span></p> -->
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <div class="col-xl-3">
-        @component('common-components.dashboard-widget')
-
-        @slot('title') Total Jarak @endslot
-        @slot('iconClass') mdi mdi-account-multiple-outline @endslot
-        @slot('price') {{ $total_distances }} KM @endslot
-        @slot('percentage') 0.16% @endslot
-        @slot('pClass') progress-bar bg-success @endslot
-        @slot('pValue') 62 @endslot
-
-        @endcomponent
+        <div class="card">
+            <div class="card-body">
+                <div class="media">
+                    <div class="avatar-sm font-size-20 mr-3">
+                        <span class="avatar-title bg-soft-primary text-primary rounded">
+                            <i class="mdi mdi-account-multiple-outline"></i>
+                        </span>
+                    </div>
+                    <div class="media-body">
+                        <div class="font-size-16 mt-2" id="total-trip">Total Jarak</div>
+                    </div>
+                </div>
+                <h4 class="mt-4"><span id="total-distance">{{ $total_distances }}</span> KM</h4>
+                <div class="row">
+                    <div class="col-7">
+                        <!-- <p class="mb-0"><span class="text-success mr-2">0.28%<i class="mdi mdi-arrow-up"></i> </span></p> -->
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <div class="col-xl-3">
-        @component('common-components.dashboard-widget')
-
-        @slot('title') Total BBM Dihemat @endslot
-        @slot('iconClass') mdi mdi-account-multiple-outline @endslot
-        @slot('price') {{ $total_fuel_reduce }} Liter @endslot
-        @slot('percentage') 0.16% @endslot
-        @slot('pClass') progress-bar bg-success @endslot
-        @slot('pValue') 62 @endslot
-
-        @endcomponent
+        <div class="card">
+            <div class="card-body">
+                <div class="media">
+                    <div class="avatar-sm font-size-20 mr-3">
+                        <span class="avatar-title bg-soft-primary text-primary rounded">
+                            <i class="mdi mdi-account-multiple-outline"></i>
+                        </span>
+                    </div>
+                    <div class="media-body">
+                        <div class="font-size-16 mt-2" id="total-trip">Total BBM Dihemat</div>
+                    </div>
+                </div>
+                <h4 class="mt-4"><span id="total-fuel">{{ $total_fuel_reduce }}</span> Liter</h4>
+                <div class="row">
+                    <div class="col-7">
+                        <!-- <p class="mb-0"><span class="text-success mr-2">0.28%<i class="mdi mdi-arrow-up"></i> </span></p> -->
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <div class="col-xl-6">
+    <!-- <div class="col-xl-6">
         <div class="card">
             <div class="card-body">
                 <h4 class="card-title mb-4">Statistik Total Pengguna</h4>
@@ -123,7 +161,7 @@
                 <div id="line-chart-total-fuel" class="apex-charts"></div>
             </div>
         </div>
-    </div>
+    </div> -->
 </div>
 <!-- end row -->
 @endsection

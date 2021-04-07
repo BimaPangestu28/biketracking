@@ -101,194 +101,226 @@ Contact: themesbrand@gmail.com
 File: Dashboard
 */
 var date = new Date();
-var firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
-var lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);
+var firstDay = new Date(date.getFullYear(), date.getMonth() + 1, 1);
+var lastDay = new Date(date.getFullYear(), date.getMonth() + 2, 0);
 $("[name='start']").val("".concat(firstDay.getMonth(), "/").concat(firstDay.getDate(), "/").concat(firstDay.getFullYear()));
-$("[name='end']").val("".concat(lastDay.getMonth(), "/").concat(lastDay.getDate(), "/").concat(lastDay.getFullYear())); // line chart
-
-var options = {
-  series: [{
-    name: "2018",
-    type: "line",
-    data: [20, 34, 27, 59, 37, 26, 38, 25]
-  }],
-  chart: {
-    height: 260,
-    type: "line",
-    toolbar: {
-      show: false
-    },
-    zoom: {
-      enabled: false
-    }
-  },
-  colors: ["#3b5de7"],
-  dataLabels: {
-    enabled: false
-  },
-  stroke: {
-    curve: "smooth",
-    width: "3",
-    dashArray: [4, 0]
-  },
-  markers: {
-    size: 3
-  },
-  xaxis: {
-    categories: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug"],
-    title: {
-      text: "Month"
-    }
-  },
-  fill: {
-    type: "solid",
-    opacity: [1, 0.1]
-  },
-  legend: {
-    position: "top",
-    horizontalAlign: "right"
-  }
-};
-var chart = new ApexCharts(document.querySelector("#line-chart-total-users"), options);
-chart.render(); // line chart
-
-var options = {
-  series: [{
-    name: "2018",
-    type: "line",
-    data: [20, 34, 27, 59, 37, 26, 38, 25]
-  }],
-  chart: {
-    height: 260,
-    type: "line",
-    toolbar: {
-      show: false
-    },
-    zoom: {
-      enabled: false
-    }
-  },
-  colors: ["#3b5de7"],
-  dataLabels: {
-    enabled: false
-  },
-  stroke: {
-    curve: "smooth",
-    width: "3",
-    dashArray: [4, 0]
-  },
-  markers: {
-    size: 3
-  },
-  xaxis: {
-    categories: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug"],
-    title: {
-      text: "Month"
-    }
-  },
-  fill: {
-    type: "solid",
-    opacity: [1, 0.1]
-  },
-  legend: {
-    position: "top",
-    horizontalAlign: "right"
-  }
-};
-var chart = new ApexCharts(document.querySelector("#line-chart-total-trips"), options);
-chart.render(); // line chart
-
-var options = {
-  series: [{
-    name: "2018",
-    type: "line",
-    data: [20, 34, 27, 59, 37, 26, 38, 25]
-  }],
-  chart: {
-    height: 260,
-    type: "line",
-    toolbar: {
-      show: false
-    },
-    zoom: {
-      enabled: false
-    }
-  },
-  colors: ["#3b5de7"],
-  dataLabels: {
-    enabled: false
-  },
-  stroke: {
-    curve: "smooth",
-    width: "3",
-    dashArray: [4, 0]
-  },
-  markers: {
-    size: 3
-  },
-  xaxis: {
-    categories: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug"],
-    title: {
-      text: "Month"
-    }
-  },
-  fill: {
-    type: "solid",
-    opacity: [1, 0.1]
-  },
-  legend: {
-    position: "top",
-    horizontalAlign: "right"
-  }
-};
-var chart = new ApexCharts(document.querySelector("#line-chart-total-distances"), options);
-chart.render(); // line chart
-
-var options = {
-  series: [{
-    name: "2018",
-    type: "line",
-    data: [20, 34, 27, 59, 37, 26, 38, 25]
-  }],
-  chart: {
-    height: 260,
-    type: "line",
-    toolbar: {
-      show: false
-    },
-    zoom: {
-      enabled: false
-    }
-  },
-  colors: ["#3b5de7"],
-  dataLabels: {
-    enabled: false
-  },
-  stroke: {
-    curve: "smooth",
-    width: "3",
-    dashArray: [4, 0]
-  },
-  markers: {
-    size: 3
-  },
-  xaxis: {
-    categories: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug"],
-    title: {
-      text: "Month"
-    }
-  },
-  fill: {
-    type: "solid",
-    opacity: [1, 0.1]
-  },
-  legend: {
-    position: "top",
-    horizontalAlign: "right"
-  }
-};
-var chart = new ApexCharts(document.querySelector("#line-chart-total-fuel"), options);
-chart.render();
+$("[name='end']").val("".concat(lastDay.getMonth(), "/").concat(lastDay.getDate(), "/").concat(lastDay.getFullYear()));
+$("#filter").click(function (e) {
+  var start = $("[name='start']").val().split("/");
+  var end = $("[name='end']").val().split("/");
+  $.ajax({
+    url: "/api/dashboard?start=".concat(start[2], "-").concat(start[0], "-").concat(start[1], "&end=").concat(end[2], "-").concat(end[0], "-").concat(end[1]),
+    method: "get"
+  }).then(function (resp) {
+    $("#total-user").text(resp.total_users);
+    $("#total-trip").text(resp.total_trips);
+    $("#total-distance").text(resp.total_distances);
+    $("#total-fuel").text(resp.total_fuel_reduce);
+  });
+}); // line chart
+// var options = {
+//   series: [
+//     {
+//       name: "2018",
+//       type: "line",
+//       data: [20, 34, 27, 59, 37, 26, 38, 25],
+//     },
+//   ],
+//   chart: {
+//     height: 260,
+//     type: "line",
+//     toolbar: {
+//       show: false,
+//     },
+//     zoom: {
+//       enabled: false,
+//     },
+//   },
+//   colors: ["#3b5de7"],
+//   dataLabels: {
+//     enabled: false,
+//   },
+//   stroke: {
+//     curve: "smooth",
+//     width: "3",
+//     dashArray: [4, 0],
+//   },
+//   markers: {
+//     size: 3,
+//   },
+//   xaxis: {
+//     categories: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug"],
+//     title: {
+//       text: "Month",
+//     },
+//   },
+//   fill: {
+//     type: "solid",
+//     opacity: [1, 0.1],
+//   },
+//   legend: {
+//     position: "top",
+//     horizontalAlign: "right",
+//   },
+// };
+// var chart = new ApexCharts(
+//   document.querySelector("#line-chart-total-users"),
+//   options
+// );
+// chart.render();
+// // line chart
+// var options = {
+//   series: [
+//     {
+//       name: "2018",
+//       type: "line",
+//       data: [20, 34, 27, 59, 37, 26, 38, 25],
+//     },
+//   ],
+//   chart: {
+//     height: 260,
+//     type: "line",
+//     toolbar: {
+//       show: false,
+//     },
+//     zoom: {
+//       enabled: false,
+//     },
+//   },
+//   colors: ["#3b5de7"],
+//   dataLabels: {
+//     enabled: false,
+//   },
+//   stroke: {
+//     curve: "smooth",
+//     width: "3",
+//     dashArray: [4, 0],
+//   },
+//   markers: {
+//     size: 3,
+//   },
+//   xaxis: {
+//     categories: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug"],
+//     title: {
+//       text: "Month",
+//     },
+//   },
+//   fill: {
+//     type: "solid",
+//     opacity: [1, 0.1],
+//   },
+//   legend: {
+//     position: "top",
+//     horizontalAlign: "right",
+//   },
+// };
+// var chart = new ApexCharts(
+//   document.querySelector("#line-chart-total-trips"),
+//   options
+// );
+// chart.render();
+// // line chart
+// var options = {
+//   series: [
+//     {
+//       name: "2018",
+//       type: "line",
+//       data: [20, 34, 27, 59, 37, 26, 38, 25],
+//     },
+//   ],
+//   chart: {
+//     height: 260,
+//     type: "line",
+//     toolbar: {
+//       show: false,
+//     },
+//     zoom: {
+//       enabled: false,
+//     },
+//   },
+//   colors: ["#3b5de7"],
+//   dataLabels: {
+//     enabled: false,
+//   },
+//   stroke: {
+//     curve: "smooth",
+//     width: "3",
+//     dashArray: [4, 0],
+//   },
+//   markers: {
+//     size: 3,
+//   },
+//   xaxis: {
+//     categories: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug"],
+//     title: {
+//       text: "Month",
+//     },
+//   },
+//   fill: {
+//     type: "solid",
+//     opacity: [1, 0.1],
+//   },
+//   legend: {
+//     position: "top",
+//     horizontalAlign: "right",
+//   },
+// };
+// var chart = new ApexCharts(
+//   document.querySelector("#line-chart-total-distances"),
+//   options
+// );
+// chart.render();
+// // line chart
+// var options = {
+//   series: [
+//     {
+//       name: "2018",
+//       type: "line",
+//       data: [20, 34, 27, 59, 37, 26, 38, 25],
+//     },
+//   ],
+//   chart: {
+//     height: 260,
+//     type: "line",
+//     toolbar: {
+//       show: false,
+//     },
+//     zoom: {
+//       enabled: false,
+//     },
+//   },
+//   colors: ["#3b5de7"],
+//   dataLabels: {
+//     enabled: false,
+//   },
+//   stroke: {
+//     curve: "smooth",
+//     width: "3",
+//     dashArray: [4, 0],
+//   },
+//   markers: {
+//     size: 3,
+//   },
+//   xaxis: {
+//     categories: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug"],
+//     title: {
+//       text: "Month",
+//     },
+//   },
+//   fill: {
+//     type: "solid",
+//     opacity: [1, 0.1],
+//   },
+//   legend: {
+//     position: "top",
+//     horizontalAlign: "right",
+//   },
+// };
+// var chart = new ApexCharts(
+//   document.querySelector("#line-chart-total-fuel"),
+//   options
+// );
+// chart.render();
 
 /***/ }),
 
