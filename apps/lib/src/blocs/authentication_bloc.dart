@@ -19,12 +19,13 @@ class AuthenticationBloc {
     final response = await http.post(url, body: data);
 
     final responeJson = json.decode(response.body);
-    final name = responeJson['success']['name'];
 
     if (response.statusCode != 200) {
       Utils.displayToast("E-mail atau password salah");
-      throw new Exception('error');
+      return false;
     }
+
+    final name = responeJson['success']['name'];
 
     Utils.displayToast("Selamat $name kamu berhasil masuk");
     await storage.write(key: "auth", value: responeJson['success']['token']);

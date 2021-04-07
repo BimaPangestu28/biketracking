@@ -106,13 +106,13 @@ class TripApiController extends Controller
         ]);
 
         $data = [
-            "trip" => $trip,
+            "trip" => Trip::where(['id' => $id])->first(),
             "fuel" => [
-                "bike" => 0.2,
-                "car" => 0.2,
+                "bike" => round(0.2 * $request->distance, 2),
+                "car" => round(0.1 * $request->distance, 2),
             ]
         ];
 
-        return $this->response->success_response("success finish trip", $trip, 200);
+        return $this->response->success_response("success finish trip", $data, 200);
     }
 }

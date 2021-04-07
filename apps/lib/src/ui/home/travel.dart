@@ -25,6 +25,10 @@ class TravelWidgetState extends State<TravelWidget> {
   GoogleMapController mapController;
   StreamSubscription<Position> _positionStreamSubscription;
   Map<PolylineId, Polyline> polylines = {};
+  dynamic categories = [];
+  dynamic categorySelect = {};
+  dynamic trip = {};
+  dynamic finish = {};
 
   int hours = 0;
   int minutes = 0;
@@ -82,86 +86,7 @@ class TravelWidgetState extends State<TravelWidget> {
               Row(
                 children: [
                   Container(
-                    child: Row(
-                      children: [
-                        GestureDetector(
-                          onTap: () =>
-                              {startOrStop(), Navigator.of(context).pop()},
-                          child: Container(
-                            padding: const EdgeInsets.all(25),
-                            margin: EdgeInsets.all(20),
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(10)),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.grey.withOpacity(0.5),
-                                  spreadRadius: 5,
-                                  blurRadius: 7,
-                                  offset: Offset(
-                                      0, 3), // changes position of shadow
-                                ),
-                              ],
-                            ),
-                            child: Column(
-                              children: [
-                                Image(
-                                  image: AssetImage(
-                                      "assets/images/bycle_icon.png"),
-                                  width: 50,
-                                ),
-                                Container(
-                                  margin: EdgeInsets.only(top: 10),
-                                  child: Text(
-                                    "Sepeda",
-                                    style: TextStyle(fontSize: 12),
-                                  ),
-                                )
-                              ],
-                            ),
-                          ),
-                        ),
-                        GestureDetector(
-                          onTap: () =>
-                              {startOrStop(), Navigator.of(context).pop()},
-                          child: Container(
-                            padding: const EdgeInsets.all(25),
-                            margin: EdgeInsets.all(20),
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(10)),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.grey.withOpacity(0.5),
-                                  spreadRadius: 5,
-                                  blurRadius: 7,
-                                  offset: Offset(
-                                      0, 3), // changes position of shadow
-                                ),
-                              ],
-                            ),
-                            child: Column(
-                              children: [
-                                Image(
-                                  image: AssetImage(
-                                      "assets/images/jogging_icon.png"),
-                                  width: 30,
-                                ),
-                                Container(
-                                  margin: EdgeInsets.only(top: 10),
-                                  child: Text(
-                                    "Berlari",
-                                    style: TextStyle(fontSize: 12),
-                                  ),
-                                )
-                              ],
-                            ),
-                          ),
-                        )
-                      ],
-                    ),
+                    child: renderCategory(),
                   )
                 ],
               )
@@ -332,6 +257,13 @@ class TravelWidgetState extends State<TravelWidget> {
     if (startStop) {
       startWatch();
 
+      dynamic tripData =
+          await appTrip.start({"category_id": categorySelect['id'].toString()});
+
+      setState(() {
+        trip = tripData;
+      });
+
       await Geolocator.getCurrentPosition(
               desiredAccuracy: LocationAccuracy.high)
           .then((Position position) async {
@@ -350,6 +282,22 @@ class TravelWidgetState extends State<TravelWidget> {
       });
     } else {
       stopWatch();
+
+      dynamic duration = 0;
+      dynamic time = elapsedTime.split(":");
+
+      duration += int.parse(time[2]);
+      duration += int.parse(time[1]) * 60;
+      duration += int.parse(time[1]) * 3600;
+
+      dynamic finishData = await appTrip.finish(trip['id'],
+          {"distance": distance.toString(), "time": duration.toString()});
+
+      print(finishData);
+
+      setState(() {
+        finish = finishData;
+      });
 
       await Geolocator.getCurrentPosition(
               desiredAccuracy: LocationAccuracy.high)
@@ -421,17 +369,17 @@ class TravelWidgetState extends State<TravelWidget> {
     }).listen((position) => {this._getCurrentLocation(position.speed)});
     // _positionStreamSubscription?.pause();
 
-    new Future.delayed(const Duration(seconds: 1), () {
-      mapController.animateCamera(
-        CameraUpdate.newCameraPosition(
-          CameraPosition(
-            target:
-                LatLng(_currentPosition.latitude, _currentPosition.longitude),
-            zoom: 18.0,
-          ),
-        ),
-      );
-    });
+    // new Future.delayed(const Duration(seconds: 1), () {
+    //   mapController.animateCamera(
+    //     CameraUpdate.newCameraPosition(
+    //       CameraPosition(
+    //         target:
+    //             LatLng(_currentPosition.latitude, _currentPosition.longitude),
+    //         zoom: 18.0,
+    //       ),
+    //     ),
+    //   );
+    // });
   }
 
   // Method for retrieving the current location
@@ -451,6 +399,13 @@ class TravelWidgetState extends State<TravelWidget> {
               .toString();
           _lastLatitude = position.latitude;
           _lastLongitude = position.longitude;
+
+          appTrip.saveCoordinate(trip['id'], {
+            "latitude": position.latitude.toString(),
+            "longitude": position.longitude.toString()
+          });
+
+          appTrip.saveSpeed(trip['id'], {"speed": speed});
         } else {
           speed = "0.00";
           distance = "0";
@@ -525,9 +480,68 @@ class TravelWidgetState extends State<TravelWidget> {
   void initState() {
     super.initState();
 
-    print(appTrip.getCategories());
+    _getCategories();
 
     _getCurrentLocation({});
+  }
+
+  _getCategories() async {
+    dynamic categoriesData = await appTrip.getCategories();
+
+    setState(() {
+      categories = categoriesData;
+    });
+  }
+
+  Widget renderCategory() {
+    List<Widget> lists = new List<Widget>();
+
+    for (var category in categories) {
+      lists.add(GestureDetector(
+        onTap: () => {
+          setState(() {
+            categorySelect = category;
+          }),
+          startOrStop(),
+          Navigator.of(context).pop(),
+        },
+        child: Container(
+          padding: const EdgeInsets.all(25),
+          margin: EdgeInsets.all(20),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.all(Radius.circular(10)),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.5),
+                spreadRadius: 5,
+                blurRadius: 7,
+                offset: Offset(0, 3), // changes position of shadow
+              ),
+            ],
+          ),
+          child: Column(
+            children: [
+              Image.network(
+                "https://pityu.id/" + category['image'],
+                width: 50,
+              ),
+              Container(
+                margin: EdgeInsets.only(top: 10),
+                child: Text(
+                  category['name'],
+                  style: TextStyle(fontSize: 12),
+                ),
+              )
+            ],
+          ),
+        ),
+      ));
+    }
+
+    return Row(
+      children: lists,
+    );
   }
 
   @override

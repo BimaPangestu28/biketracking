@@ -43,8 +43,8 @@ class HomeScreen extends State<HomePage> {
     });
   }
 
-  logout() {
-    storage.delete(key: "auth");
+  logout() async {
+    await storage.delete(key: "auth");
     Navigator.of(context).pushReplacementNamed("/login");
   }
 

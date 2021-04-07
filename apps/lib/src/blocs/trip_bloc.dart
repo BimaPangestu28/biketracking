@@ -14,34 +14,87 @@ class TripBloc {
       : env['DEV_BASE_URL'];
 
   // Start Fucntion
-  Future<bool> start(context, data) async {
-    final url = Uri.parse('$_baseUrl/login');
-    final response = await http.post(url, body: data);
+  Future<dynamic> start(data) async {
+    String token = await storage.read(key: "auth");
 
-    final responeJson = json.decode(response.body);
-    final name = responeJson['success']['name'];
+    final url = Uri.parse('$_baseUrl/trips/start');
+    final response = await http.post(url, body: data, headers: {
+      'Authorization': 'Bearer $token',
+    });
 
-    if (response.statusCode != 200) {
+    if (response.statusCode != 201) {
       Utils.displayToast("Terjadi kesalahan pada server");
-      throw new Exception('error');
+      return false;
     }
 
-    return true;
+    return json.decode(response.body)['data'];
   }
 
-  // Start Fucntion
-  Future<bool> getCategories() async {
-    final url = Uri.parse('$_baseUrl/trips/categories');
-    final response = await http.get(url);
-    print(url);
-    print(json.decode(response.body));
-    final responeJson = json.decode(response.body);
+  // Get Category Fucntion
+  Future<dynamic> getCategories() async {
+    String token = await storage.read(key: "auth");
 
-    if (response.statusCode != 200) {
+    try {
+      final url = Uri.parse('$_baseUrl/trips/categories');
+      final response = await http.get(url, headers: {
+        'Authorization': 'Bearer $token',
+      });
+
+      return json.decode(response.body)['data'];
+    } catch (e) {
       Utils.displayToast("Terjadi kesalahan pada server");
-      throw new Exception('error');
+      return false;
     }
+  }
 
-    return true;
+  // Get Save Coordinate Fucntion
+  Future<bool> saveCoordinate(tripId, data) async {
+    String token = await storage.read(key: "auth");
+
+    try {
+      final url = Uri.parse('$_baseUrl/trips/$tripId/save-coordinate');
+      http.post(url, body: data, headers: {
+        'Authorization': 'Bearer $token',
+      });
+
+      return true;
+    } catch (e) {
+      Utils.displayToast("Terjadi kesalahan pada server");
+      return false;
+    }
+  }
+
+  // Save Speed Fucntion
+  Future<bool> saveSpeed(tripId, data) async {
+    String token = await storage.read(key: "auth");
+
+    try {
+      final url = Uri.parse('$_baseUrl/trips/$tripId/save-speed');
+      http.post(url, body: data, headers: {
+        'Authorization': 'Bearer $token',
+      });
+
+      return true;
+    } catch (e) {
+      Utils.displayToast("Terjadi kesalahan pada server");
+      return false;
+    }
+  }
+
+  Future<bool> finish(tripId, data) async {
+    String token = await storage.read(key: "auth");
+
+    try {
+      final url = Uri.parse('$_baseUrl/trips/$tripId/finish');
+      final response = await http.post(url, body: data, headers: {
+        'Authorization': 'Bearer $token',
+      });
+
+      return json.decode(response.body)['data'];
+    } catch (e) {
+      print(e);
+      Utils.displayToast("Terjadi kesalahan pada server");
+      return false;
+    }
   }
 }

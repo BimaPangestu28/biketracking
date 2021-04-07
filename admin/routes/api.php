@@ -27,6 +27,7 @@ Route::post('register', 'Api\AuthenticationController@register');
 Route::group(['middleware' => 'auth:api'], function () {
     Route::group(['prefix' => '/trips'], function () {
         Route::post('/start', 'Api\TripApiController@start');
+        Route::post('/{id}/finish', 'Api\TripApiController@finish');
         Route::post('/{id}/upload', 'Api\TripApiController@upload');
         Route::post('/{id}/save-coordinate', 'Api\TripApiController@saveCoordinate');
         Route::post('/{id}/save-speed', 'Api\TripApiController@saveSpeed');

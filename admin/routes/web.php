@@ -58,5 +58,5 @@ Route::group(['middleware' => 'auth'], function () {
     });
 
     Route::get('/vouchers', 'VoucherController@index')->name('vouchers.index');
-    Route::get('{any}', 'QovexController@index');
+    // Route::get('{any}', 'QovexController@index');
 });

@@ -53,7 +53,6 @@ class _LoginPageState extends State<LoginPage> {
                       style: TextStyle(fontSize: 18, color: Color(0xffffffff)),
                     ),
                     onPressed: () {
-                      storage.write(key: "auth", value: "true");
                       Navigator.of(context).pushReplacementNamed("/login-form");
                     },
                   ),
