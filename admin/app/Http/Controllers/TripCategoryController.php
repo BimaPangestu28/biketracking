@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Str;
 
-use App\Models\TripCategory as TripCategory;
+use App\TripCategory as TripCategory;
 use Illuminate\Http\Request;
 
 class TripCategoryController extends Controller

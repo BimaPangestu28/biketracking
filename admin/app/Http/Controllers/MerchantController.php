@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Merchant;
+use App\Merchant;
 use Illuminate\Http\Request;
 
 class MerchantController extends Controller

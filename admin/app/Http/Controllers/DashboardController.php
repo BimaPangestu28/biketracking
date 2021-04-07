@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Trip;
+use App\Trip;
 use App\User;
 
 class DashboardController extends Controller

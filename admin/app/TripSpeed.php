@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Models;
+namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class TripCoordinate extends Model
+class TripSpeed extends Model
 {
-    protected $fillable = ['trip_id', 'latitude', 'longitude'];
+    protected $fillable = ['trip_id', 'speed'];
 
     public function trip()
     {
