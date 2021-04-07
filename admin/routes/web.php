@@ -37,12 +37,15 @@ Route::post('login-status', 'QovexController@checkStatus');
 
 // You can also use auth middleware to prevent unauthenticated users
 Route::group(['middleware' => 'auth'], function () {
+    Route::get('/', 'DashboardController@index')->name('dashboard');
+    Route::get('/index', 'DashboardController@index')->name('dashboard');
     Route::get('/home', 'HomeController@index')->name('home');
     Route::get('/blogs', 'BlogController@index')->name('blogs.index');
     Route::get('/users', 'UserController@index')->name('users.index');
 
     Route::group(['prefix' => 'trips'], function () {
         Route::get('/', 'TripController@index')->name('trips.index');
+        Route::get('/{id}/detail', 'TripController@show')->name('trips.detail');
 
         Route::group(['prefix' => 'categories'], function () {
             Route::get('/', 'TripCategoryController@index')->name('trips.categories.index');
@@ -58,5 +61,5 @@ Route::group(['middleware' => 'auth'], function () {
     });
 
     Route::get('/vouchers', 'VoucherController@index')->name('vouchers.index');
-    // Route::get('{any}', 'QovexController@index');
+    Route::get('{any}', 'QovexController@index');
 });

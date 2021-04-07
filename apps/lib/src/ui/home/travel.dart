@@ -598,7 +598,7 @@ class TravelWidgetState extends State<TravelWidget> {
               width: MediaQuery.of(context)
                   .size
                   .width, // or use fixed size like 200
-              height: MediaQuery.of(context).size.height * .5,
+              height: MediaQuery.of(context).size.height * .3,
               child: Stack(
                 children: [
                   // Map View

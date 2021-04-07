@@ -2,11 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Trip;
 use Illuminate\Http\Request;
+use App\Models\Trip;
+use App\User;
 
-class TripController extends Controller
+class DashboardController extends Controller
 {
+    public function format($number)
+    {
+        return number_format($number, 0, '.', ',');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -14,9 +20,12 @@ class TripController extends Controller
      */
     public function index()
     {
-        $trips = Trip::all();
+        $total_trips = $this->format(Trip::count());
+        $total_users = $this->format((User::where(['is_admin' => false])->count()));
+        $total_distances = $this->format(Trip::sum('distance'));
+        $total_fuel_reduce = $this->format(round(Trip::sum('distance') * .2, 2));
 
-        return view('pages.trips.index', compact('trips'));
+        return view('pages.dashboards.index', compact('total_trips', 'total_users', 'total_distances', 'total_fuel_reduce'));
     }
 
     /**
@@ -43,23 +52,21 @@ class TripController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Trip  $trip
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Request $request, $id)
+    public function show($id)
     {
-        $trip = Trip::where(['id' => $id])->with(['speeds', 'coordinates'])->first();
-
-        return view('pages.trips.detail', compact('trip'));
+        //
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Trip  $trip
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Trip $trip)
+    public function edit($id)
     {
         //
     }
@@ -68,10 +75,10 @@ class TripController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Trip  $trip
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Trip $trip)
+    public function update(Request $request, $id)
     {
         //
     }
@@ -79,10 +86,10 @@ class TripController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Trip  $trip
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Trip $trip)
+    public function destroy($id)
     {
         //
     }

@@ -14,7 +14,7 @@
 
         @component('common-components.dashboard-widget')
 
-        @slot('title') New Orders @endslot
+        @slot('title') Total Pengguna @endslot
         @slot('iconClass') mdi mdi-tag-plus-outline @endslot
         @slot('price') 1,368 @endslot
         @slot('percentage') 0.28% @endslot
@@ -23,9 +23,12 @@
 
         @endcomponent
 
+    </div>
+
+    <div class="col-xl-3">
         @component('common-components.dashboard-widget')
 
-        @slot('title') New Users @endslot
+        @slot('title') Total Perjalanan @endslot
         @slot('iconClass') mdi mdi-account-multiple-outline @endslot
         @slot('price') 2,456 @endslot
         @slot('percentage') 0.16% @endslot
@@ -33,7 +36,32 @@
         @slot('pValue') 62 @endslot
 
         @endcomponent
+    </div>
 
+    <div class="col-xl-3">
+        @component('common-components.dashboard-widget')
+
+        @slot('title') Total Jarak @endslot
+        @slot('iconClass') mdi mdi-account-multiple-outline @endslot
+        @slot('price') 2,456 @endslot
+        @slot('percentage') 0.16% @endslot
+        @slot('pClass') progress-bar bg-success @endslot
+        @slot('pValue') 62 @endslot
+
+        @endcomponent
+    </div>
+
+    <div class="col-xl-3">
+        @component('common-components.dashboard-widget')
+
+        @slot('title') Total BBM Dihemat @endslot
+        @slot('iconClass') mdi mdi-account-multiple-outline @endslot
+        @slot('price') 2,456 @endslot
+        @slot('percentage') 0.16% @endslot
+        @slot('pClass') progress-bar bg-success @endslot
+        @slot('pValue') 62 @endslot
+
+        @endcomponent
     </div>
 
     <div class="col-xl-6">
@@ -46,7 +74,7 @@
         </div>
     </div>
 
-    <div class="col-xl-3">
+    <div class="col-xl-6">
         <div class="card">
             <div class="card-body">
                 <h4 class="card-title mb-4">Revenue</h4>
