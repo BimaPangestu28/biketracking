@@ -17,4 +17,14 @@ class Trip extends Model
     {
         return $this->belongsTo(TripCategory::class);
     }
+
+    public function speeds()
+    {
+        return $this->belongsToMany(TripSpeed::class);
+    }
+
+    public function coordinates()
+    {
+        return $this->belongsToMany(TripCoordinate::class);
+    }
 }

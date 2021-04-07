@@ -1,6 +1,6 @@
 @extends('layouts.master')
 
-@section('title') Pengelolaan Perjalanan @endsection
+@section('title') Detail Perjalanan @endsection
 @section('css')
 
 <!-- DataTables -->
@@ -12,7 +12,7 @@
 
 @component('common-components.breadcrumb')
 @slot('title') Perjalanan @endslot
-@slot('li_1') Pengelolaan @endslot
+@slot('li_1') Detail @endslot
 @endcomponent
 
 <div class="row">
@@ -20,8 +20,8 @@
         <div class="card">
             <div class="card-body">
 
-                <h4 class="card-title">Pengelolaan Perjalanan</h4>
-                <p class="card-title-desc">Disini kamu bisa mengelola perjalanan yang telah mendaftar pada aplikasi Pityu
+                <h4 class="card-title">Pengelolaan Detail Perjalanan</h4>
+                <p class="card-title-desc">Disini kamu bisa melihat detail perjalanan perjalanan yang telah mendaftar pada aplikasi Pityu
                 </p>
 
                 <table id="datatable" class="table table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
@@ -47,7 +47,7 @@
                             <td>{{ $trip->distance }}</td>
                             <td>{{ $trip->time }}</td>
                             <td>
-                                <a href="{{ route('trips.detail', $trip->id) }}">
+                                <a href="{{ route('trips.detail') }}">
                                     <button class="btn btn-sm btn-warning"><i class="fas fa-eye"></i></button>
                                 </a>
                             </td>
