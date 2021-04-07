@@ -102,8 +102,7 @@ class TravelWidgetState extends State<TravelWidget> {
               "Iya",
               style: TextStyle(color: Colors.white, fontSize: 14),
             ),
-            onPressed: () =>
-                {startOrStop(), Navigator.pop(context), openDialogResult()},
+            onPressed: () => {startOrStop(), Navigator.pop(context)},
             color: Color.fromRGBO(0, 179, 134, 1.0),
           ),
           DialogButton(
@@ -156,7 +155,7 @@ class TravelWidgetState extends State<TravelWidget> {
                 child: Row(
                   children: [
                     Expanded(
-                      flex: 4,
+                      flex: 6,
                       child: Column(
                         children: [
                           Text(
@@ -175,24 +174,6 @@ class TravelWidgetState extends State<TravelWidget> {
                       ),
                     ),
                     Expanded(
-                        child: Column(
-                          children: [
-                            Text(
-                              "Kilokalori \n (kkal)",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(fontSize: 14),
-                            ),
-                            Container(
-                                child: Text(
-                                  "0",
-                                  style: TextStyle(fontSize: 14),
-                                  textAlign: TextAlign.center,
-                                ),
-                                margin: EdgeInsets.only(top: 5)),
-                          ],
-                        ),
-                        flex: 4),
-                    Expanded(
                       child: Column(
                         children: [
                           Text(
@@ -209,11 +190,69 @@ class TravelWidgetState extends State<TravelWidget> {
                               margin: EdgeInsets.only(top: 5)),
                         ],
                       ),
-                      flex: 4,
+                      flex: 6,
                     )
                   ],
                 ),
               ),
+              Container(
+                  child: Column(
+                children: [
+                  Text(
+                    "Kamu telah menghemat bbm jika menggunakan motor atau mobil",
+                    style: TextStyle(
+                      fontSize: 14,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(bottom: 30, top: 10),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          flex: 6,
+                          child: Column(
+                            children: [
+                              Text(
+                                "Mobil",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(fontSize: 14),
+                              ),
+                              Container(
+                                  child: Text(
+                                    finish["fuel"]["car"].toString() + " liter",
+                                    style: TextStyle(fontSize: 14),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  margin: EdgeInsets.only(top: 5)),
+                            ],
+                          ),
+                        ),
+                        Expanded(
+                          child: Column(
+                            children: [
+                              Text(
+                                "Motor",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(fontSize: 14),
+                              ),
+                              Container(
+                                  child: Text(
+                                    finish["fuel"]["bike"].toString() +
+                                        " liter",
+                                    style: TextStyle(fontSize: 14),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  margin: EdgeInsets.only(top: 5)),
+                            ],
+                          ),
+                          flex: 6,
+                        )
+                      ],
+                    ),
+                  ),
+                ],
+              ))
             ],
           ),
           Container(
@@ -293,11 +332,11 @@ class TravelWidgetState extends State<TravelWidget> {
       dynamic finishData = await appTrip.finish(trip['id'],
           {"distance": distance.toString(), "time": duration.toString()});
 
-      print(finishData);
-
       setState(() {
         finish = finishData;
       });
+
+      openDialogResult();
 
       await Geolocator.getCurrentPosition(
               desiredAccuracy: LocationAccuracy.high)

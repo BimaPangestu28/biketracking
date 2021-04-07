@@ -81,7 +81,7 @@ class TripBloc {
     }
   }
 
-  Future<bool> finish(tripId, data) async {
+  Future<dynamic> finish(tripId, data) async {
     String token = await storage.read(key: "auth");
 
     try {
