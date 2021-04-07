@@ -24,6 +24,8 @@ Route::post('register', 'Api\AuthenticationController@register');
 
 
 // Trip
+Route::get('/dashboard', 'DashboardController@api');
+
 Route::group(['middleware' => 'auth:api'], function () {
     Route::group(['prefix' => '/trips'], function () {
         Route::post('/start', 'Api\TripApiController@start');

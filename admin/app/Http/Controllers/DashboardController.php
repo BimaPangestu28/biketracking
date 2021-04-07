@@ -20,12 +20,28 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        $total_trips = $this->format(Trip::count());
-        $total_users = $this->format((User::where(['is_admin' => false])->count()));
-        $total_distances = $this->format(Trip::sum('distance'));
-        $total_fuel_reduce = $this->format(round(Trip::sum('distance') * .2, 2));
+        $first_day_this_month = date('Y-m-01');
+        $last_day_this_month  = date('Y-m-t');
+
+        $total_trips = $this->format(Trip::whereBetween('created_at', [$first_day_this_month, $last_day_this_month])->count());
+        $total_users = $this->format((User::where(['is_admin' => false])->whereBetween('created_at', [$first_day_this_month, $last_day_this_month])->count()));
+        $total_distances = $this->format(Trip::whereBetween('created_at', [$first_day_this_month, $last_day_this_month])->sum('distance'));
+        $total_fuel_reduce = $this->format(round(Trip::whereBetween('created_at', [$first_day_this_month, $last_day_this_month])->sum('distance') * .2, 2));
 
         return view('pages.dashboards.index', compact('total_trips', 'total_users', 'total_distances', 'total_fuel_reduce'));
+    }
+
+    public function api(Request $request)
+    {
+        $first_day_this_month = date($request->query('start'));
+        $last_day_this_month = date($request->query('end'));
+
+        $total_trips = $this->format(Trip::whereBetween('created_at', [$first_day_this_month, $last_day_this_month])->count());
+        $total_users = $this->format((User::where(['is_admin' => false])->whereBetween('created_at', [$first_day_this_month, $last_day_this_month])->count()));
+        $total_distances = $this->format(Trip::whereBetween('created_at', [$first_day_this_month, $last_day_this_month])->sum('distance'));
+        $total_fuel_reduce = $this->format(round(Trip::whereBetween('created_at', [$first_day_this_month, $last_day_this_month])->sum('distance') * .2, 2));
+
+        return response()->json(["total_trips" => $total_trips, "total_users" => $total_users, "total_distances" => $total_distances, "total_fuel_reduce" => $total_fuel_reduce]);
     }
 
     /**
