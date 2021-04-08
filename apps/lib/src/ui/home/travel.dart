@@ -6,6 +6,11 @@ import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:esys_flutter_share/esys_flutter_share.dart';
+import 'package:screenshot/screenshot.dart';
+import 'package:flutter/rendering.dart';
+import 'dart:typed_data';
+import 'package:path_provider/path_provider.dart';
 
 import 'dart:math' show cos, sqrt, asin;
 
@@ -21,6 +26,30 @@ class TravelWidget extends StatefulWidget {
 }
 
 class TravelWidgetState extends State<TravelWidget> {
+  File _imageFile;
+
+  //Create an instance of ScreenshotController
+  ScreenshotController screenshotController = ScreenshotController();
+
+  _takeScreenshotandShare() async {
+    _imageFile = null;
+    screenshotController
+        .capture(delay: Duration(milliseconds: 10), pixelRatio: 2.0)
+        .then((File image) async {
+      setState(() {
+        _imageFile = image;
+      });
+      final directory = (await getApplicationDocumentsDirectory()).path;
+      Uint8List pngBytes = _imageFile.readAsBytesSync();
+      File imgFile = new File('$directory/screenshot.png');
+      imgFile.writeAsBytes(pngBytes);
+      print("File Saved to Gallery");
+      await Share.file('Pityu', 'screenshot.png', pngBytes, 'image/png');
+    }).catchError((onError) {
+      print(onError);
+    });
+  }
+
   CameraPosition _initialLocation = CameraPosition(target: LatLng(0.0, 0.0));
   GoogleMapController mapController;
   StreamSubscription<Position> _positionStreamSubscription;
@@ -273,8 +302,10 @@ class TravelWidgetState extends State<TravelWidget> {
             "Iya",
             style: TextStyle(color: Colors.white, fontSize: 14),
           ),
-          onPressed: () =>
-              {startOrStop(), Navigator.pop(context), openDialogResult()},
+          onPressed: () => {
+            _takeScreenshotandShare(),
+            Navigator.pop(context),
+          },
           color: Color.fromRGBO(0, 179, 134, 1.0),
         ),
         DialogButton(
@@ -419,23 +450,24 @@ class TravelWidgetState extends State<TravelWidget> {
 
         if (start) {
           speedCollection.add(_speed);
-          speed = _speed.toString();
+          speed = _speed.toStringAsFixed(2).toString();
           distance = (double.parse(distance) + _distance)
               .toStringAsFixed(2)
               .toString();
           _lastLatitude = position.latitude;
           _lastLongitude = position.longitude;
 
-          appTrip.saveCoordinate(trip['id'], {
-            "latitude": position.latitude.toString(),
-            "longitude": position.longitude.toString()
-          });
+          // appTrip.saveCoordinate(trip['id'], {
+          //   "latitude": position.latitude.toString(),
+          //   "longitude": position.longitude.toString()
+          // });
 
-          appTrip.saveSpeed(trip['id'], {"speed": speed});
-        } else {
-          speed = "0.00";
-          distance = "0";
+          // appTrip.saveSpeed(trip['id'], {"speed": speed});
+        } else if (_lastLatitude == 0) {
+          _lastLatitude = position.latitude;
+          _lastLongitude = position.longitude;
         }
+
         mapController.animateCamera(
           CameraUpdate.newCameraPosition(
             CameraPosition(
@@ -512,7 +544,7 @@ class TravelWidgetState extends State<TravelWidget> {
   }
 
   _getCategories() async {
-    dynamic categoriesData = await appTrip.getCategories();
+    dynamic categoriesData = await appTrip.getCategories(context);
 
     print(categoriesData);
 
@@ -576,241 +608,248 @@ class TravelWidgetState extends State<TravelWidget> {
   Widget build(BuildContext context) {
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
-    return Container(
-      height: height,
-      width: width,
+
+    return Screenshot(
+      controller: screenshotController,
       child: Scaffold(
-        key: _scaffoldKey,
-        body: Column(
-          children: <Widget>[
-            SizedBox(
-              width: MediaQuery.of(context)
-                  .size
-                  .width, // or use fixed size like 200
-              height: MediaQuery.of(context).size.height * .4,
-              child: Stack(
-                children: [
-                  // Map View
-                  GoogleMap(
-                    markers: markers != null ? Set<Marker>.from(markers) : null,
-                    initialCameraPosition: _initialLocation,
-                    myLocationEnabled: true,
-                    myLocationButtonEnabled: false,
-                    mapType: MapType.normal,
-                    zoomGesturesEnabled: true,
-                    zoomControlsEnabled: false,
-                    polylines: Set<Polyline>.of(polylines.values),
-                    onMapCreated: _onMapCreated,
-                  ),
-                  // Show zoom buttons
-                  SafeArea(
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 10.0),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          ClipOval(
-                            child: Material(
-                              color: Colors.blue[100], // button color
-                              child: InkWell(
-                                splashColor: Colors.blue, // inkwell color
-                                child: SizedBox(
-                                  width: 50,
-                                  height: 50,
-                                  child: Icon(Icons.add),
-                                ),
-                                onTap: () {
-                                  mapController.animateCamera(
-                                    CameraUpdate.zoomIn(),
-                                  );
-                                },
-                              ),
-                            ),
-                          ),
-                          SizedBox(height: 20),
-                          ClipOval(
-                            child: Material(
-                              color: Colors.blue[100], // button color
-                              child: InkWell(
-                                splashColor: Colors.blue, // inkwell color
-                                child: SizedBox(
-                                  width: 50,
-                                  height: 50,
-                                  child: Icon(Icons.remove),
-                                ),
-                                onTap: () {
-                                  mapController.animateCamera(
-                                    CameraUpdate.zoomOut(),
-                                  );
-                                },
-                              ),
-                            ),
-                          )
-                        ],
-                      ),
+          body: Container(
+        height: height,
+        width: width,
+        child: Scaffold(
+          key: _scaffoldKey,
+          body: Column(
+            children: <Widget>[
+              SizedBox(
+                width: MediaQuery.of(context)
+                    .size
+                    .width, // or use fixed size like 200
+                height: MediaQuery.of(context).size.height * .4,
+                child: Stack(
+                  children: [
+                    // Map View
+                    GoogleMap(
+                      markers:
+                          markers != null ? Set<Marker>.from(markers) : null,
+                      initialCameraPosition: _initialLocation,
+                      myLocationEnabled: true,
+                      myLocationButtonEnabled: false,
+                      mapType: MapType.normal,
+                      zoomGesturesEnabled: true,
+                      zoomControlsEnabled: false,
+                      polylines: Set<Polyline>.of(polylines.values),
+                      onMapCreated: _onMapCreated,
                     ),
-                  ),
-                  SafeArea(
-                    child: Align(
-                      alignment: Alignment.bottomRight,
+                    // Show zoom buttons
+                    SafeArea(
                       child: Padding(
-                        padding:
-                            const EdgeInsets.only(right: 10.0, bottom: 10.0),
-                        child: ClipOval(
-                          child: Material(
-                            color: Colors.orange[100], // button color
-                            child: InkWell(
-                              splashColor: Colors.orange, // inkwell color
-                              child: SizedBox(
-                                width: 56,
-                                height: 56,
-                                child: Icon(Icons.my_location),
-                              ),
-                              onTap: () {
-                                mapController.animateCamera(
-                                  CameraUpdate.newCameraPosition(
-                                    CameraPosition(
-                                      target: LatLng(
-                                        _currentPosition.latitude,
-                                        _currentPosition.longitude,
-                                      ),
-                                      zoom: 18.0,
-                                    ),
-                                  ),
-                                );
-                              },
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Column(
-              children: [
-                Container(
-                  margin: EdgeInsets.only(top: 20),
-                  child: Text(
-                    "Durasi Waktu",
-                    style: TextStyle(fontSize: 18),
-                  ),
-                ),
-                Container(
-                  margin: EdgeInsets.only(top: 5, bottom: 10),
-                  child: Text(
-                    elapsedTime,
-                    style: TextStyle(fontSize: 32),
-                  ),
-                ),
-                Container(
-                  margin: EdgeInsets.only(bottom: 30, top: 10),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        flex: 4,
+                        padding: const EdgeInsets.only(left: 10.0),
                         child: Column(
-                          children: [
-                            Text(
-                              "Jarak \n (km)",
-                              textAlign: TextAlign.center,
-                            ),
-                            Container(
-                                child: Text(
-                                  distance,
-                                  style: TextStyle(fontSize: 24),
-                                  textAlign: TextAlign.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            ClipOval(
+                              child: Material(
+                                color: Colors.blue[100], // button color
+                                child: InkWell(
+                                  splashColor: Colors.blue, // inkwell color
+                                  child: SizedBox(
+                                    width: 50,
+                                    height: 50,
+                                    child: Icon(Icons.add),
+                                  ),
+                                  onTap: () {
+                                    mapController.animateCamera(
+                                      CameraUpdate.zoomIn(),
+                                    );
+                                  },
                                 ),
-                                margin: EdgeInsets.only(top: 5)),
+                              ),
+                            ),
+                            SizedBox(height: 20),
+                            ClipOval(
+                              child: Material(
+                                color: Colors.blue[100], // button color
+                                child: InkWell(
+                                  splashColor: Colors.blue, // inkwell color
+                                  child: SizedBox(
+                                    width: 50,
+                                    height: 50,
+                                    child: Icon(Icons.remove),
+                                  ),
+                                  onTap: () {
+                                    mapController.animateCamera(
+                                      CameraUpdate.zoomOut(),
+                                    );
+                                  },
+                                ),
+                              ),
+                            )
                           ],
                         ),
                       ),
-                      Expanded(
+                    ),
+                    SafeArea(
+                      child: Align(
+                        alignment: Alignment.bottomRight,
+                        child: Padding(
+                          padding:
+                              const EdgeInsets.only(right: 10.0, bottom: 10.0),
+                          child: ClipOval(
+                            child: Material(
+                              color: Colors.orange[100], // button color
+                              child: InkWell(
+                                splashColor: Colors.orange, // inkwell color
+                                child: SizedBox(
+                                  width: 56,
+                                  height: 56,
+                                  child: Icon(Icons.my_location),
+                                ),
+                                onTap: () {
+                                  mapController.animateCamera(
+                                    CameraUpdate.newCameraPosition(
+                                      CameraPosition(
+                                        target: LatLng(
+                                          _currentPosition.latitude,
+                                          _currentPosition.longitude,
+                                        ),
+                                        zoom: 18.0,
+                                      ),
+                                    ),
+                                  );
+                                },
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Column(
+                children: [
+                  Container(
+                    margin: EdgeInsets.only(top: 20),
+                    child: Text(
+                      "Durasi Waktu",
+                      style: TextStyle(fontSize: 18),
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(top: 5, bottom: 10),
+                    child: Text(
+                      elapsedTime,
+                      style: TextStyle(fontSize: 32),
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(bottom: 30, top: 10),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          flex: 6,
                           child: Column(
                             children: [
                               Text(
-                                "Kilokalori \n (kkal)",
+                                "Jarak \n (km)",
                                 textAlign: TextAlign.center,
                               ),
                               Container(
                                   child: Text(
-                                    "0",
+                                    distance,
                                     style: TextStyle(fontSize: 24),
                                     textAlign: TextAlign.center,
                                   ),
                                   margin: EdgeInsets.only(top: 5)),
                             ],
                           ),
-                          flex: 4),
-                      Expanded(
-                        child: Column(
-                          children: [
-                            Text(
-                              "Kecepatan \n (m/jam)",
-                              textAlign: TextAlign.center,
-                            ),
-                            Container(
-                                child: Text(
-                                  speed,
-                                  style: TextStyle(fontSize: 24),
-                                  textAlign: TextAlign.center,
-                                ),
-                                margin: EdgeInsets.only(top: 5)),
-                          ],
                         ),
-                        flex: 4,
+                        // Expanded(
+                        //     child: Column(
+                        //       children: [
+                        //         Text(
+                        //           "Kilokalori \n (kkal)",
+                        //           textAlign: TextAlign.center,
+                        //         ),
+                        //         Container(
+                        //             child: Text(
+                        //               "0",
+                        //               style: TextStyle(fontSize: 24),
+                        //               textAlign: TextAlign.center,
+                        //             ),
+                        //             margin: EdgeInsets.only(top: 5)),
+                        //       ],
+                        //     ),
+                        //     flex: 4),
+                        Expanded(
+                          child: Column(
+                            children: [
+                              Text(
+                                "Kecepatan \n (m/jam)",
+                                textAlign: TextAlign.center,
+                              ),
+                              Container(
+                                  child: Text(
+                                    speed,
+                                    style: TextStyle(fontSize: 24),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  margin: EdgeInsets.only(top: 5)),
+                            ],
+                          ),
+                          flex: 6,
+                        )
+                      ],
+                    ),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Visibility(
+                          visible: start,
+                          child: Container(
+                            margin: EdgeInsets.only(right: 10),
+                            child: GestureDetector(
+                              onTap: getImage,
+                              child: Container(
+                                width: 50.0,
+                                height: 50.0,
+                                decoration: new BoxDecoration(
+                                    color: Colors.white,
+                                    shape: BoxShape.circle,
+                                    image: new DecorationImage(
+                                        fit: BoxFit.scaleDown,
+                                        image: AssetImage(
+                                            "assets/images/photo-camera-icon.png"))),
+                              ),
+                            ),
+                          )),
+                      Container(
+                        child: ElevatedButton(
+                          onPressed: openAlert,
+                          style: ButtonStyle(
+                              shape: MaterialStateProperty.all<
+                                      RoundedRectangleBorder>(
+                                  RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(50.0),
+                              )),
+                              backgroundColor:
+                                  MaterialStateProperty.all(Color(0xff5CC6D0)),
+                              padding: MaterialStateProperty.all(
+                                  EdgeInsets.symmetric(
+                                      vertical: 15, horizontal: 50)),
+                              elevation: MaterialStateProperty.all(0)),
+                          child: Text(start ? "Berhenti" : "Start sekarang",
+                              style: TextStyle(fontSize: 18)),
+                        ),
                       )
                     ],
-                  ),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Visibility(
-                        visible: start,
-                        child: Container(
-                          margin: EdgeInsets.only(right: 10),
-                          child: GestureDetector(
-                            onTap: getImage,
-                            child: Container(
-                              width: 50.0,
-                              height: 50.0,
-                              decoration: new BoxDecoration(
-                                  color: Colors.white,
-                                  shape: BoxShape.circle,
-                                  image: new DecorationImage(
-                                      fit: BoxFit.scaleDown,
-                                      image: AssetImage(
-                                          "assets/images/photo-camera-icon.png"))),
-                            ),
-                          ),
-                        )),
-                    Container(
-                      child: ElevatedButton(
-                        onPressed: openAlert,
-                        style: ButtonStyle(
-                            shape: MaterialStateProperty.all<
-                                RoundedRectangleBorder>(RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(50.0),
-                            )),
-                            backgroundColor:
-                                MaterialStateProperty.all(Color(0xff5CC6D0)),
-                            padding: MaterialStateProperty.all(
-                                EdgeInsets.symmetric(
-                                    vertical: 15, horizontal: 50)),
-                            elevation: MaterialStateProperty.all(0)),
-                        child: Text(start ? "Berhenti" : "Start sekarang",
-                            style: TextStyle(fontSize: 18)),
-                      ),
-                    )
-                  ],
-                )
-              ],
-            )
-          ],
+                  )
+                ],
+              )
+            ],
+          ),
         ),
-      ),
+      )),
     );
   }
 }

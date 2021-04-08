@@ -31,7 +31,7 @@ class TripBloc {
   }
 
   // Get Category Fucntion
-  Future<dynamic> getCategories() async {
+  Future<dynamic> getCategories(context) async {
     String token = await storage.read(key: "auth");
 
     try {
@@ -43,6 +43,9 @@ class TripBloc {
       return json.decode(response.body)['data'];
     } catch (e) {
       Utils.displayToast("Terjadi kesalahan pada server");
+
+      await storage.delete(key: "auth");
+      Navigator.of(context).pushReplacementNamed("/login");
       return [];
     }
   }

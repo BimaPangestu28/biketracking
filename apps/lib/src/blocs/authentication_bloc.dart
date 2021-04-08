@@ -29,6 +29,7 @@ class AuthenticationBloc {
 
     Utils.displayToast("Selamat $name kamu berhasil masuk");
     await storage.write(key: "auth", value: responeJson['success']['token']);
+    await storage.write(key: "name", value: responeJson['success']['name']);
     Navigator.of(context).pushReplacementNamed("/home");
 
     return true;
@@ -70,6 +71,30 @@ class AuthenticationBloc {
     Navigator.of(context).pushReplacementNamed("/login-form");
 
     return true;
+  }
+
+  // Login Fucntion
+  Future<dynamic> userDetail() async {
+    String token = await storage.read(key: "auth");
+
+    final url = Uri.parse('$_baseUrl/details');
+    final response = await http.get(url, headers: {
+      'Authorization': 'Bearer $token',
+    });
+
+    try {
+      final responeJson = json.decode(response.body);
+
+      if (response.statusCode != 200) {
+        Utils.displayToast("Terjadi kesalahan pada server");
+        return false;
+      }
+
+      return responeJson['success'];
+    } catch (e) {
+      Utils.displayToast("Terjadi kesalahan pada server");
+      return false;
+    }
   }
 
   Future<void> logout() async {
