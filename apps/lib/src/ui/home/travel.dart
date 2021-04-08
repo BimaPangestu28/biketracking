@@ -31,7 +31,7 @@ class TravelWidgetState extends State<TravelWidget> {
   //Create an instance of ScreenshotController
   ScreenshotController screenshotController = ScreenshotController();
 
-  _takeScreenshotandShare() async {
+  _takeScreenshotandShare(context) async {
     _imageFile = null;
     screenshotController
         .capture(delay: Duration(milliseconds: 10), pixelRatio: 2.0)
@@ -45,6 +45,8 @@ class TravelWidgetState extends State<TravelWidget> {
       imgFile.writeAsBytes(pngBytes);
       print("File Saved to Gallery");
       await Share.file('Pityu', 'screenshot.png', pngBytes, 'image/png');
+
+      Navigator.pop(context);
     }).catchError((onError) {
       print(onError);
     });
@@ -154,147 +156,159 @@ class TravelWidgetState extends State<TravelWidget> {
     return Alert(
       context: context,
       title: "",
-      content: Column(
-        children: [
-          Text(
-            "Terimakasih\nKamu telah membuat awan menjadi lebih biru dengan bersepeda",
-            style: TextStyle(
-              fontSize: 14,
+      content: Screenshot(
+        controller: screenshotController,
+        child: Column(
+          children: [
+            Container(
+              child: Image.asset(
+                'assets/images/logo_home.png',
+                // height: 25,
+                width: 70,
+              ),
+              margin: EdgeInsets.only(bottom: 15),
             ),
-            textAlign: TextAlign.center,
-          ),
-          Column(
-            children: [
-              Container(
-                margin: EdgeInsets.only(top: 20),
-                child: Text(
-                  "Durasi Waktu",
-                  style: TextStyle(fontSize: 14),
-                ),
-              ),
-              Container(
-                margin: EdgeInsets.only(top: 5, bottom: 10),
-                child: Text(
-                  elapsedTime,
-                  style: TextStyle(fontSize: 14),
-                ),
-              ),
-              Container(
-                margin: EdgeInsets.only(bottom: 30, top: 10),
-                child: Row(
-                  children: [
-                    Expanded(
-                      flex: 6,
-                      child: Column(
-                        children: [
-                          Text(
-                            "Jarak \n (km)",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(fontSize: 14),
-                          ),
-                          Container(
-                              child: Text(
-                                distance,
-                                style: TextStyle(fontSize: 14),
-                                textAlign: TextAlign.center,
-                              ),
-                              margin: EdgeInsets.only(top: 5)),
-                        ],
-                      ),
-                    ),
-                    Expanded(
-                      child: Column(
-                        children: [
-                          Text(
-                            "Kecepatan \n (m/jam)",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(fontSize: 14),
-                          ),
-                          Container(
-                              child: Text(
-                                speed,
-                                style: TextStyle(fontSize: 14),
-                                textAlign: TextAlign.center,
-                              ),
-                              margin: EdgeInsets.only(top: 5)),
-                        ],
-                      ),
-                      flex: 6,
-                    )
-                  ],
-                ),
-              ),
-              Container(
-                  child: Column(
-                children: [
-                  Text(
-                    "Kamu telah menghemat bbm jika menggunakan motor atau mobil",
-                    style: TextStyle(
-                      fontSize: 14,
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(bottom: 30, top: 10),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          flex: 6,
-                          child: Column(
-                            children: [
-                              Text(
-                                "Mobil",
-                                textAlign: TextAlign.center,
-                                style: TextStyle(fontSize: 14),
-                              ),
-                              Container(
-                                  child: Text(
-                                    finish["fuel"]["car"].toString() + " liter",
-                                    style: TextStyle(fontSize: 14),
-                                    textAlign: TextAlign.center,
-                                  ),
-                                  margin: EdgeInsets.only(top: 5)),
-                            ],
-                          ),
-                        ),
-                        Expanded(
-                          child: Column(
-                            children: [
-                              Text(
-                                "Motor",
-                                textAlign: TextAlign.center,
-                                style: TextStyle(fontSize: 14),
-                              ),
-                              Container(
-                                  child: Text(
-                                    finish["fuel"]["bike"].toString() +
-                                        " liter",
-                                    style: TextStyle(fontSize: 14),
-                                    textAlign: TextAlign.center,
-                                  ),
-                                  margin: EdgeInsets.only(top: 5)),
-                            ],
-                          ),
-                          flex: 6,
-                        )
-                      ],
-                    ),
-                  ),
-                ],
-              ))
-            ],
-          ),
-          Container(
-            child: Text(
-              'Apakah kamu ingin membagikannya?',
+            Text(
+              "Terimakasih\nKamu telah membuat awan menjadi lebih biru dengan bersepeda",
               style: TextStyle(
                 fontSize: 14,
               ),
               textAlign: TextAlign.center,
             ),
-            margin: EdgeInsets.only(top: 10),
-          ),
-        ],
+            Column(
+              children: [
+                Container(
+                  margin: EdgeInsets.only(top: 20),
+                  child: Text(
+                    "Durasi Waktu",
+                    style: TextStyle(fontSize: 14),
+                  ),
+                ),
+                Container(
+                  margin: EdgeInsets.only(top: 5, bottom: 10),
+                  child: Text(
+                    elapsedTime,
+                    style: TextStyle(fontSize: 14),
+                  ),
+                ),
+                Container(
+                  margin: EdgeInsets.only(bottom: 30, top: 10),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        flex: 6,
+                        child: Column(
+                          children: [
+                            Text(
+                              "Jarak \n (km)",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(fontSize: 14),
+                            ),
+                            Container(
+                                child: Text(
+                                  distance,
+                                  style: TextStyle(fontSize: 14),
+                                  textAlign: TextAlign.center,
+                                ),
+                                margin: EdgeInsets.only(top: 5)),
+                          ],
+                        ),
+                      ),
+                      Expanded(
+                        child: Column(
+                          children: [
+                            Text(
+                              "Kecepatan \n (m/jam)",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(fontSize: 14),
+                            ),
+                            Container(
+                                child: Text(
+                                  speed,
+                                  style: TextStyle(fontSize: 14),
+                                  textAlign: TextAlign.center,
+                                ),
+                                margin: EdgeInsets.only(top: 5)),
+                          ],
+                        ),
+                        flex: 6,
+                      )
+                    ],
+                  ),
+                ),
+                Container(
+                    child: Column(
+                  children: [
+                    Text(
+                      "Kamu telah menghemat bbm jika menggunakan motor atau mobil",
+                      style: TextStyle(
+                        fontSize: 14,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(bottom: 30, top: 10),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            flex: 6,
+                            child: Column(
+                              children: [
+                                Text(
+                                  "Mobil",
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(fontSize: 14),
+                                ),
+                                Container(
+                                    child: Text(
+                                      finish["fuel"]["car"].toString() +
+                                          " liter",
+                                      style: TextStyle(fontSize: 14),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                    margin: EdgeInsets.only(top: 5)),
+                              ],
+                            ),
+                          ),
+                          Expanded(
+                            child: Column(
+                              children: [
+                                Text(
+                                  "Motor",
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(fontSize: 14),
+                                ),
+                                Container(
+                                    child: Text(
+                                      finish["fuel"]["bike"].toString() +
+                                          " liter",
+                                      style: TextStyle(fontSize: 14),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                    margin: EdgeInsets.only(top: 5)),
+                              ],
+                            ),
+                            flex: 6,
+                          )
+                        ],
+                      ),
+                    ),
+                  ],
+                ))
+              ],
+            ),
+            Container(
+              child: Text(
+                'Apakah kamu ingin membagikannya?',
+                style: TextStyle(
+                  fontSize: 14,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              margin: EdgeInsets.only(top: 10),
+            ),
+          ],
+        ),
       ),
       buttons: [
         DialogButton(
@@ -303,8 +317,7 @@ class TravelWidgetState extends State<TravelWidget> {
             style: TextStyle(color: Colors.white, fontSize: 14),
           ),
           onPressed: () => {
-            _takeScreenshotandShare(),
-            Navigator.pop(context),
+            _takeScreenshotandShare(context),
           },
           color: Color.fromRGBO(0, 179, 134, 1.0),
         ),
@@ -609,247 +622,241 @@ class TravelWidgetState extends State<TravelWidget> {
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
 
-    return Screenshot(
-      controller: screenshotController,
-      child: Scaffold(
-          body: Container(
+    return Container(
         height: height,
         width: width,
         child: Scaffold(
-          key: _scaffoldKey,
-          body: Column(
-            children: <Widget>[
-              SizedBox(
-                width: MediaQuery.of(context)
-                    .size
-                    .width, // or use fixed size like 200
-                height: MediaQuery.of(context).size.height * .4,
-                child: Stack(
-                  children: [
-                    // Map View
-                    GoogleMap(
-                      markers:
-                          markers != null ? Set<Marker>.from(markers) : null,
-                      initialCameraPosition: _initialLocation,
-                      myLocationEnabled: true,
-                      myLocationButtonEnabled: false,
-                      mapType: MapType.normal,
-                      zoomGesturesEnabled: true,
-                      zoomControlsEnabled: false,
-                      polylines: Set<Polyline>.of(polylines.values),
-                      onMapCreated: _onMapCreated,
-                    ),
-                    // Show zoom buttons
-                    SafeArea(
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 10.0),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            ClipOval(
-                              child: Material(
-                                color: Colors.blue[100], // button color
-                                child: InkWell(
-                                  splashColor: Colors.blue, // inkwell color
-                                  child: SizedBox(
-                                    width: 50,
-                                    height: 50,
-                                    child: Icon(Icons.add),
-                                  ),
-                                  onTap: () {
-                                    mapController.animateCamera(
-                                      CameraUpdate.zoomIn(),
-                                    );
-                                  },
-                                ),
-                              ),
-                            ),
-                            SizedBox(height: 20),
-                            ClipOval(
-                              child: Material(
-                                color: Colors.blue[100], // button color
-                                child: InkWell(
-                                  splashColor: Colors.blue, // inkwell color
-                                  child: SizedBox(
-                                    width: 50,
-                                    height: 50,
-                                    child: Icon(Icons.remove),
-                                  ),
-                                  onTap: () {
-                                    mapController.animateCamera(
-                                      CameraUpdate.zoomOut(),
-                                    );
-                                  },
-                                ),
-                              ),
-                            )
-                          ],
-                        ),
+            key: _scaffoldKey,
+            body: Column(
+              children: <Widget>[
+                SizedBox(
+                  width: MediaQuery.of(context)
+                      .size
+                      .width, // or use fixed size like 200
+                  height: MediaQuery.of(context).size.height * .4,
+                  child: Stack(
+                    children: [
+                      // Map View
+                      GoogleMap(
+                        markers:
+                            markers != null ? Set<Marker>.from(markers) : null,
+                        initialCameraPosition: _initialLocation,
+                        myLocationEnabled: true,
+                        myLocationButtonEnabled: false,
+                        mapType: MapType.normal,
+                        zoomGesturesEnabled: true,
+                        zoomControlsEnabled: false,
+                        polylines: Set<Polyline>.of(polylines.values),
+                        onMapCreated: _onMapCreated,
                       ),
-                    ),
-                    SafeArea(
-                      child: Align(
-                        alignment: Alignment.bottomRight,
+                      // Show zoom buttons
+                      SafeArea(
                         child: Padding(
-                          padding:
-                              const EdgeInsets.only(right: 10.0, bottom: 10.0),
-                          child: ClipOval(
-                            child: Material(
-                              color: Colors.orange[100], // button color
-                              child: InkWell(
-                                splashColor: Colors.orange, // inkwell color
-                                child: SizedBox(
-                                  width: 56,
-                                  height: 56,
-                                  child: Icon(Icons.my_location),
-                                ),
-                                onTap: () {
-                                  mapController.animateCamera(
-                                    CameraUpdate.newCameraPosition(
-                                      CameraPosition(
-                                        target: LatLng(
-                                          _currentPosition.latitude,
-                                          _currentPosition.longitude,
-                                        ),
-                                        zoom: 18.0,
-                                      ),
+                          padding: const EdgeInsets.only(left: 10.0),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              ClipOval(
+                                child: Material(
+                                  color: Colors.blue[100], // button color
+                                  child: InkWell(
+                                    splashColor: Colors.blue, // inkwell color
+                                    child: SizedBox(
+                                      width: 50,
+                                      height: 50,
+                                      child: Icon(Icons.add),
                                     ),
-                                  );
-                                },
+                                    onTap: () {
+                                      mapController.animateCamera(
+                                        CameraUpdate.zoomIn(),
+                                      );
+                                    },
+                                  ),
+                                ),
+                              ),
+                              SizedBox(height: 20),
+                              ClipOval(
+                                child: Material(
+                                  color: Colors.blue[100], // button color
+                                  child: InkWell(
+                                    splashColor: Colors.blue, // inkwell color
+                                    child: SizedBox(
+                                      width: 50,
+                                      height: 50,
+                                      child: Icon(Icons.remove),
+                                    ),
+                                    onTap: () {
+                                      mapController.animateCamera(
+                                        CameraUpdate.zoomOut(),
+                                      );
+                                    },
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                      SafeArea(
+                        child: Align(
+                          alignment: Alignment.bottomRight,
+                          child: Padding(
+                            padding: const EdgeInsets.only(
+                                right: 10.0, bottom: 10.0),
+                            child: ClipOval(
+                              child: Material(
+                                color: Colors.orange[100], // button color
+                                child: InkWell(
+                                  splashColor: Colors.orange, // inkwell color
+                                  child: SizedBox(
+                                    width: 56,
+                                    height: 56,
+                                    child: Icon(Icons.my_location),
+                                  ),
+                                  onTap: () {
+                                    mapController.animateCamera(
+                                      CameraUpdate.newCameraPosition(
+                                        CameraPosition(
+                                          target: LatLng(
+                                            _currentPosition.latitude,
+                                            _currentPosition.longitude,
+                                          ),
+                                          zoom: 18.0,
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                ),
                               ),
                             ),
                           ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-              Column(
-                children: [
-                  Container(
-                    margin: EdgeInsets.only(top: 20),
-                    child: Text(
-                      "Durasi Waktu",
-                      style: TextStyle(fontSize: 18),
+                Column(
+                  children: [
+                    Container(
+                      margin: EdgeInsets.only(top: 20),
+                      child: Text(
+                        "Durasi Waktu",
+                        style: TextStyle(fontSize: 18),
+                      ),
                     ),
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(top: 5, bottom: 10),
-                    child: Text(
-                      elapsedTime,
-                      style: TextStyle(fontSize: 32),
+                    Container(
+                      margin: EdgeInsets.only(top: 5, bottom: 10),
+                      child: Text(
+                        elapsedTime,
+                        style: TextStyle(fontSize: 32),
+                      ),
                     ),
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(bottom: 30, top: 10),
-                    child: Row(
+                    Container(
+                      margin: EdgeInsets.only(bottom: 30, top: 10),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            flex: 6,
+                            child: Column(
+                              children: [
+                                Text(
+                                  "Jarak \n (km)",
+                                  textAlign: TextAlign.center,
+                                ),
+                                Container(
+                                    child: Text(
+                                      distance,
+                                      style: TextStyle(fontSize: 24),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                    margin: EdgeInsets.only(top: 5)),
+                              ],
+                            ),
+                          ),
+                          // Expanded(
+                          //     child: Column(
+                          //       children: [
+                          //         Text(
+                          //           "Kilokalori \n (kkal)",
+                          //           textAlign: TextAlign.center,
+                          //         ),
+                          //         Container(
+                          //             child: Text(
+                          //               "0",
+                          //               style: TextStyle(fontSize: 24),
+                          //               textAlign: TextAlign.center,
+                          //             ),
+                          //             margin: EdgeInsets.only(top: 5)),
+                          //       ],
+                          //     ),
+                          //     flex: 4),
+                          Expanded(
+                            child: Column(
+                              children: [
+                                Text(
+                                  "Kecepatan \n (m/jam)",
+                                  textAlign: TextAlign.center,
+                                ),
+                                Container(
+                                    child: Text(
+                                      speed,
+                                      style: TextStyle(fontSize: 24),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                    margin: EdgeInsets.only(top: 5)),
+                              ],
+                            ),
+                            flex: 6,
+                          )
+                        ],
+                      ),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Expanded(
-                          flex: 6,
-                          child: Column(
-                            children: [
-                              Text(
-                                "Jarak \n (km)",
-                                textAlign: TextAlign.center,
+                        Visibility(
+                            visible: start,
+                            child: Container(
+                              margin: EdgeInsets.only(right: 10),
+                              child: GestureDetector(
+                                onTap: getImage,
+                                child: Container(
+                                  width: 50.0,
+                                  height: 50.0,
+                                  decoration: new BoxDecoration(
+                                      color: Colors.white,
+                                      shape: BoxShape.circle,
+                                      image: new DecorationImage(
+                                          fit: BoxFit.scaleDown,
+                                          image: AssetImage(
+                                              "assets/images/photo-camera-icon.png"))),
+                                ),
                               ),
-                              Container(
-                                  child: Text(
-                                    distance,
-                                    style: TextStyle(fontSize: 24),
-                                    textAlign: TextAlign.center,
-                                  ),
-                                  margin: EdgeInsets.only(top: 5)),
-                            ],
+                            )),
+                        Container(
+                          child: ElevatedButton(
+                            onPressed: openAlert,
+                            style: ButtonStyle(
+                                shape: MaterialStateProperty.all<
+                                        RoundedRectangleBorder>(
+                                    RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(50.0),
+                                )),
+                                backgroundColor: MaterialStateProperty.all(
+                                    Color(0xff5CC6D0)),
+                                padding: MaterialStateProperty.all(
+                                    EdgeInsets.symmetric(
+                                        vertical: 15, horizontal: 50)),
+                                elevation: MaterialStateProperty.all(0)),
+                            child: Text(start ? "Berhenti" : "Start sekarang",
+                                style: TextStyle(fontSize: 14)),
                           ),
-                        ),
-                        // Expanded(
-                        //     child: Column(
-                        //       children: [
-                        //         Text(
-                        //           "Kilokalori \n (kkal)",
-                        //           textAlign: TextAlign.center,
-                        //         ),
-                        //         Container(
-                        //             child: Text(
-                        //               "0",
-                        //               style: TextStyle(fontSize: 24),
-                        //               textAlign: TextAlign.center,
-                        //             ),
-                        //             margin: EdgeInsets.only(top: 5)),
-                        //       ],
-                        //     ),
-                        //     flex: 4),
-                        Expanded(
-                          child: Column(
-                            children: [
-                              Text(
-                                "Kecepatan \n (m/jam)",
-                                textAlign: TextAlign.center,
-                              ),
-                              Container(
-                                  child: Text(
-                                    speed,
-                                    style: TextStyle(fontSize: 24),
-                                    textAlign: TextAlign.center,
-                                  ),
-                                  margin: EdgeInsets.only(top: 5)),
-                            ],
-                          ),
-                          flex: 6,
                         )
                       ],
-                    ),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Visibility(
-                          visible: start,
-                          child: Container(
-                            margin: EdgeInsets.only(right: 10),
-                            child: GestureDetector(
-                              onTap: getImage,
-                              child: Container(
-                                width: 50.0,
-                                height: 50.0,
-                                decoration: new BoxDecoration(
-                                    color: Colors.white,
-                                    shape: BoxShape.circle,
-                                    image: new DecorationImage(
-                                        fit: BoxFit.scaleDown,
-                                        image: AssetImage(
-                                            "assets/images/photo-camera-icon.png"))),
-                              ),
-                            ),
-                          )),
-                      Container(
-                        child: ElevatedButton(
-                          onPressed: openAlert,
-                          style: ButtonStyle(
-                              shape: MaterialStateProperty.all<
-                                      RoundedRectangleBorder>(
-                                  RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(50.0),
-                              )),
-                              backgroundColor:
-                                  MaterialStateProperty.all(Color(0xff5CC6D0)),
-                              padding: MaterialStateProperty.all(
-                                  EdgeInsets.symmetric(
-                                      vertical: 15, horizontal: 50)),
-                              elevation: MaterialStateProperty.all(0)),
-                          child: Text(start ? "Berhenti" : "Start sekarang",
-                              style: TextStyle(fontSize: 18)),
-                        ),
-                      )
-                    ],
-                  )
-                ],
-              )
-            ],
-          ),
-        ),
-      )),
-    );
+                    )
+                  ],
+                )
+              ],
+            )));
   }
 }
