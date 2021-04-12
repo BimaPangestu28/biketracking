@@ -107,8 +107,8 @@ class TripApiController extends Controller
         $data = [
             "trip" => Trip::where(['id' => $id])->first(),
             "fuel" => [
-                "bike" => round(0.2 * $request->distance, 2),
-                "car" => round(0.1 * $request->distance, 2),
+                "bike" => round(0.1 * $request->distance, 2),
+                "car" => round(0.2 * $request->distance, 2),
             ]
         ];
 

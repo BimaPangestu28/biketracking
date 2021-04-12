@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Merchant;
 use App\Voucher;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class VoucherController extends Controller
 {
@@ -26,7 +28,9 @@ class VoucherController extends Controller
      */
     public function create()
     {
-        //
+        $merchants = Merchant::all();
+
+        return view('pages.vouchers.create', compact('merchants'));
     }
 
     /**
@@ -37,7 +41,25 @@ class VoucherController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'image' => 'mimes:jpeg,png|max:1014',
+        ]);
+
+        $extension = $request->image->extension();
+        $image_name = Str::slug($request->name) . '.' . $extension;
+        $public_path = '/images/merchants/vouchers/';
+
+        $request->image->move(public_path($public_path), $image_name);
+
+        Voucher::create([
+            "merchant_id" => $request->merchant_id,
+            "name" => $request->name,
+            "point_redeem" => $request->point_redeem,
+            "valid_until" => $request->valid_until,
+            "image" => $public_path . $image_name
+        ]);
+
+        return redirect()->route('vouchers.index');
     }
 
     /**
@@ -80,8 +102,10 @@ class VoucherController extends Controller
      * @param  \App\Voucher  $voucher
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Voucher $voucher)
+    public function destroy(Voucher $voucher, $id)
     {
-        //
+        Voucher::where(['id' => $id])->delete();
+
+        return redirect()->route('vouchers.index');
     }
 }

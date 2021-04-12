@@ -58,8 +58,16 @@ Route::group(['middleware' => 'auth'], function () {
     Route::group(['prefix' => '/merchants'], function () {
         Route::get('/', 'MerchantController@index')->name('merchants.index');
         Route::get('/create', 'MerchantController@create')->name('merchants.create');
+        Route::post('/store', 'MerchantController@store')->name('merchants.store');
+        Route::delete('/{id}/delete', 'MerchantController@destroy')->name('merchants.delete');
     });
 
-    Route::get('/vouchers', 'VoucherController@index')->name('vouchers.index');
+    Route::group(['prefix' => 'vouchers'], function () {
+        Route::get('/', 'VoucherController@index')->name('vouchers.index');
+        Route::get('/create', 'VoucherController@create')->name('vouchers.create');
+        Route::post('/store', 'VoucherController@store')->name('vouchers.store');
+        Route::delete('/{id}/delete', 'VoucherController@destroy')->name('vouchers.delete');
+    });
+
     Route::get('{any}', 'QovexController@index');
 });

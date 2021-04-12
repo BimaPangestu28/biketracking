@@ -157,94 +157,41 @@ class TravelWidgetState extends State<TravelWidget> {
       context: context,
       title: "",
       content: Screenshot(
-        controller: screenshotController,
-        child: Column(
-          children: [
-            Container(
-              child: Image.asset(
-                'assets/images/logo_home.png',
-                // height: 25,
-                width: 70,
-              ),
-              margin: EdgeInsets.only(bottom: 15),
-            ),
-            Text(
-              "Terimakasih\nKamu telah membuat awan menjadi lebih biru dengan bersepeda",
-              style: TextStyle(
-                fontSize: 14,
-              ),
-              textAlign: TextAlign.center,
-            ),
-            Column(
+          controller: screenshotController,
+          child: Container(
+            decoration: BoxDecoration(color: Colors.white),
+            child: Column(
               children: [
                 Container(
-                  margin: EdgeInsets.only(top: 20),
-                  child: Text(
-                    "Durasi Waktu",
-                    style: TextStyle(fontSize: 14),
+                  child: Image.asset(
+                    'assets/images/logo_home.png',
+                    // height: 25,
+                    width: 70,
                   ),
+                  margin: EdgeInsets.only(bottom: 15),
                 ),
-                Container(
-                  margin: EdgeInsets.only(top: 5, bottom: 10),
-                  child: Text(
-                    elapsedTime,
-                    style: TextStyle(fontSize: 14),
+                Text(
+                  "Terimakasih\nKamu telah membuat awan menjadi lebih biru dengan bersepeda",
+                  style: TextStyle(
+                    fontSize: 14,
                   ),
+                  textAlign: TextAlign.center,
                 ),
-                Container(
-                  margin: EdgeInsets.only(bottom: 30, top: 10),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        flex: 6,
-                        child: Column(
-                          children: [
-                            Text(
-                              "Jarak \n (km)",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(fontSize: 14),
-                            ),
-                            Container(
-                                child: Text(
-                                  distance,
-                                  style: TextStyle(fontSize: 14),
-                                  textAlign: TextAlign.center,
-                                ),
-                                margin: EdgeInsets.only(top: 5)),
-                          ],
-                        ),
-                      ),
-                      Expanded(
-                        child: Column(
-                          children: [
-                            Text(
-                              "Kecepatan \n (m/jam)",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(fontSize: 14),
-                            ),
-                            Container(
-                                child: Text(
-                                  speed,
-                                  style: TextStyle(fontSize: 14),
-                                  textAlign: TextAlign.center,
-                                ),
-                                margin: EdgeInsets.only(top: 5)),
-                          ],
-                        ),
-                        flex: 6,
-                      )
-                    ],
-                  ),
-                ),
-                Container(
-                    child: Column(
+                Column(
                   children: [
-                    Text(
-                      "Kamu telah menghemat bbm jika menggunakan motor atau mobil",
-                      style: TextStyle(
-                        fontSize: 14,
+                    Container(
+                      margin: EdgeInsets.only(top: 20),
+                      child: Text(
+                        "Durasi Waktu",
+                        style: TextStyle(fontSize: 14),
                       ),
-                      textAlign: TextAlign.center,
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(top: 5, bottom: 10),
+                      child: Text(
+                        elapsedTime,
+                        style: TextStyle(fontSize: 14),
+                      ),
                     ),
                     Container(
                       margin: EdgeInsets.only(bottom: 30, top: 10),
@@ -255,14 +202,13 @@ class TravelWidgetState extends State<TravelWidget> {
                             child: Column(
                               children: [
                                 Text(
-                                  "Mobil",
+                                  "Jarak \n (km)",
                                   textAlign: TextAlign.center,
                                   style: TextStyle(fontSize: 14),
                                 ),
                                 Container(
                                     child: Text(
-                                      finish["fuel"]["car"].toString() +
-                                          " liter",
+                                      distance,
                                       style: TextStyle(fontSize: 14),
                                       textAlign: TextAlign.center,
                                     ),
@@ -274,14 +220,13 @@ class TravelWidgetState extends State<TravelWidget> {
                             child: Column(
                               children: [
                                 Text(
-                                  "Motor",
+                                  "Kecepatan \n (m/jam)",
                                   textAlign: TextAlign.center,
                                   style: TextStyle(fontSize: 14),
                                 ),
                                 Container(
                                     child: Text(
-                                      finish["fuel"]["bike"].toString() +
-                                          " liter",
+                                      speed,
                                       style: TextStyle(fontSize: 14),
                                       textAlign: TextAlign.center,
                                     ),
@@ -293,23 +238,80 @@ class TravelWidgetState extends State<TravelWidget> {
                         ],
                       ),
                     ),
+                    Container(
+                        child: Column(
+                      children: [
+                        Text(
+                          "Kamu telah menghemat bbm jika menggunakan motor atau mobil",
+                          style: TextStyle(
+                            fontSize: 14,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                        Container(
+                          margin: EdgeInsets.only(bottom: 30, top: 10),
+                          child: Row(
+                            children: [
+                              Expanded(
+                                flex: 6,
+                                child: Column(
+                                  children: [
+                                    Text(
+                                      "Mobil",
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(fontSize: 14),
+                                    ),
+                                    Container(
+                                        child: Text(
+                                          finish["fuel"]["car"].toString() +
+                                              " liter",
+                                          style: TextStyle(fontSize: 14),
+                                          textAlign: TextAlign.center,
+                                        ),
+                                        margin: EdgeInsets.only(top: 5)),
+                                  ],
+                                ),
+                              ),
+                              Expanded(
+                                child: Column(
+                                  children: [
+                                    Text(
+                                      "Motor",
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(fontSize: 14),
+                                    ),
+                                    Container(
+                                        child: Text(
+                                          finish["fuel"]["bike"].toString() +
+                                              " liter",
+                                          style: TextStyle(fontSize: 14),
+                                          textAlign: TextAlign.center,
+                                        ),
+                                        margin: EdgeInsets.only(top: 5)),
+                                  ],
+                                ),
+                                flex: 6,
+                              )
+                            ],
+                          ),
+                        ),
+                      ],
+                    ))
                   ],
-                ))
+                ),
+                Container(
+                  child: Text(
+                    'Apakah kamu ingin membagikannya?',
+                    style: TextStyle(
+                      fontSize: 14,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                  margin: EdgeInsets.only(top: 10),
+                ),
               ],
             ),
-            Container(
-              child: Text(
-                'Apakah kamu ingin membagikannya?',
-                style: TextStyle(
-                  fontSize: 14,
-                ),
-                textAlign: TextAlign.center,
-              ),
-              margin: EdgeInsets.only(top: 10),
-            ),
-          ],
-        ),
-      ),
+          )),
       buttons: [
         DialogButton(
           child: Text(

@@ -1,6 +1,6 @@
 @extends('layouts.master')
 
-@section('title') Pengelolaan Pengguna @endsection
+@section('title') Pengelolaan Voucher @endsection
 @section('css')
 
 <!-- DataTables -->
@@ -11,7 +11,7 @@
 @section('content')
 
 @component('common-components.breadcrumb')
-@slot('title') Pengguna @endslot
+@slot('title') Voucher @endslot
 @slot('li_1') Pengelolaan @endslot
 @endcomponent
 
@@ -20,9 +20,25 @@
         <div class="card">
             <div class="card-body">
 
-                <h4 class="card-title">Pengelolaan Pengguna</h4>
-                <p class="card-title-desc">Disini kamu bisa mengelola pengguna yang telah mendaftar pada aplikasi Pityu
-                </p>
+                <div class="col-12">
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="row">
+                                <h4 class="card-title">Pengelolaan Voucher</h4>
+                                <p class="card-title-desc">Disini kamu bisa mengelola voucher yang telah terdaftar pada aplikasi Pityu
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="col-6">
+                            <div class="row float-right">
+                                <a href="{{ route('vouchers.create') }}">
+                                    <button class="btn btn-primary">Buat Voucher</button>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
                 <table id="datatable" class="table table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                     <thead>
@@ -32,6 +48,7 @@
                             <th>Image</th>
                             <th>Point Redeem</th>
                             <th>Valid Until</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
 
@@ -40,9 +57,16 @@
                         <tr>
                             <td>{{ $voucher->merchant->name }}</td>
                             <td>{{ $voucher->name }}</td>
-                            <td><img src="{{ $voucher->image }}" alt="Voucher"></td>
+                            <td><img width="300px" src="{{ url($voucher->image) }}" alt="Voucher"></td>
                             <td>{{ $voucher->point_redeem }}</td>
-                            <td>{{ $voucher->valid_until }}</td>
+                            <td>{{ date('d F Y', strtotime($voucher->valid_until)) }}</td>
+                            <td>
+                                <form action="{{ route('vouchers.delete', $voucher->id) }}" method="post">
+                                    {{ csrf_field() }}
+                                    <input type="hidden" name="_method" value="delete" />
+                                    <button class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
+                                </form>
+                            </td>
                         </tr>
                         @endforeach
                     </tbody>

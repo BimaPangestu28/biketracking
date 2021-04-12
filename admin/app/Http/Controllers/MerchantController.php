@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Merchant;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class MerchantController extends Controller
 {
@@ -37,7 +39,24 @@ class MerchantController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'image' => 'mimes:jpeg,png|max:1014',
+        ]);
+
+        $extension = $request->image->extension();
+        $image_name = Str::slug($request->name) . '.' . $extension;
+        $public_path = '/images/merchants/';
+
+        $request->image->move(public_path($public_path), $image_name);
+
+        Merchant::create([
+            "name" => $request->name,
+            "latitude" => $request->latitude,
+            "longitude" => $request->longitude,
+            "image" => $public_path . $request->name . "." . $extension
+        ]);
+
+        return redirect()->route('merchants.index');
     }
 
     /**
@@ -80,8 +99,10 @@ class MerchantController extends Controller
      * @param  \App\Merchant  $merchant
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Merchant $merchant)
+    public function destroy(Merchant $merchant, $id)
     {
-        //
+        $merchant->where(['id' => $id])->delete();
+
+        return redirect()->route('merchants.index');
     }
 }

@@ -43,6 +43,8 @@
                             <th>Name</th>
                             <th>Longitude</th>
                             <th>Latitude</th>
+                            <th>Image</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
 
@@ -52,6 +54,14 @@
                             <td>{{ $merchant->name }}</td>
                             <td>{{ $merchant->longitude }}</td>
                             <td>{{ $merchant->latitude }}</td>
+                            <td><img width="50" src="{{ url($merchant->image) }}" alt="{{ $merchant->name }}"></td>
+                            <td>
+                                <form action="{{ route('merchants.delete', $merchant->id) }}" method="post">
+                                    {{ csrf_field() }}
+                                    <input type="hidden" name="_method" value="delete" />
+                                    <button class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
+                                </form>
+                            </td>
                         </tr>
                         @endforeach
                     </tbody>
