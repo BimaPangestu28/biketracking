@@ -2,45 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use App\TripDetail;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
-class QovexController extends Controller
+class TripDetailController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index()
     {
-        if (view()->exists($request->path())) {
-            return view($request->path());
-        }
-        return view('pages-404');
+        //
     }
 
-    public function authPages(Request $request)
-    {
-        if (view()->exists('auth.' . $request->path())) {
-            return view('auth.' . $request->path());
-        }
-        return view('pages-404');
-    }
-
-    public function checkStatus()
-    {
-        if (!Auth::check()) {
-            return abort(404);
-        }
-        return false;
-    }
-
-    public function logout()
-    {
-        Auth::logout();
-        return redirect('/login');
-    }
     /**
      * Show the form for creating a new resource.
      *
@@ -65,10 +41,10 @@ class QovexController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\TripDetail  $tripDetail
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(TripDetail $tripDetail)
     {
         //
     }
@@ -76,10 +52,10 @@ class QovexController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\TripDetail  $tripDetail
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(TripDetail $tripDetail)
     {
         //
     }
@@ -88,10 +64,10 @@ class QovexController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\TripDetail  $tripDetail
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, TripDetail $tripDetail)
     {
         //
     }
@@ -99,16 +75,11 @@ class QovexController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\TripDetail  $tripDetail
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(TripDetail $tripDetail)
     {
         //
-    }
-
-    public function veirfy_email()
-    {
-        return view('auth.verify');
     }
 }

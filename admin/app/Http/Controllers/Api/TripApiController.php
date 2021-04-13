@@ -100,6 +100,14 @@ class TripApiController extends Controller
             "time" => $request->time,
         ]);
 
+        foreach ($request->details as $detail) {
+            $trip->details()->create([
+                "speed" => $detail->speed,
+                "latitude" => $detail->latitude,
+                "longitude" => $detail->longitude,
+            ]);
+        }
+
         User::where(['id' => Auth::user()->id])->update([
             "point" => Auth::user()->point + round($request->distance)
         ]);

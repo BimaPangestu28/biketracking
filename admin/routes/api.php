@@ -14,10 +14,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::group(['middleware' => 'auth:api'], function () {
-    Route::get('details', 'Api\AuthenticationController@details');
-});
-
 // Authentication route api
 Route::post('login', 'Api\AuthenticationController@login');
 Route::post('register', 'Api\AuthenticationController@register');
@@ -37,5 +33,10 @@ Route::group(['middleware' => 'auth:api'], function () {
         Route::group(['prefix' => 'categories'], function () {
             Route::get('/', 'Api\TripApiController@getCategories');
         });
+    });
+
+    Route::group(['prefix' => '/user'], function () {
+        Route::put('/update', 'Api\UserApiController@update');
+        Route::get('/detail', 'Api\UserApiController@detail');
     });
 });

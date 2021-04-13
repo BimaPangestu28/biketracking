@@ -17,29 +17,15 @@ Route::get('/', function () {
     return redirect('/index');
 });
 
-Auth::routes();
+Auth::routes(['verify' => true]);
 Route::get('logout', 'QovexController@logout');
-
-Route::get('pages-login', 'QovexController@index');
-Route::get('pages-login-2', 'QovexController@index');
-Route::get('pages-register', 'QovexController@index');
-Route::get('pages-register-2', 'QovexController@index');
-Route::get('pages-recoverpw', 'QovexController@index');
-Route::get('pages-recoverpw-2', 'QovexController@index');
-Route::get('pages-lock-screen', 'QovexController@index');
-Route::get('pages-lock-screen-2', 'QovexController@index');
-Route::get('pages-404', 'QovexController@index');
-Route::get('pages-500', 'QovexController@index');
-Route::get('pages-maintenance', 'QovexController@index');
-Route::get('pages-comingsoon', 'QovexController@index');
-Route::post('login-status', 'QovexController@checkStatus');
+Route::get('/email/verify', 'QovexController@veirfy_email')->name('verification.notice');
 
 
 // You can also use auth middleware to prevent unauthenticated users
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/', 'DashboardController@index')->name('dashboard');
-    Route::get('/index', 'DashboardController@index')->name('dashboard');
-    Route::get('/home', 'HomeController@index')->name('home');
+    Route::get('/index', 'DashboardController@index');
     Route::get('/blogs', 'BlogController@index')->name('blogs.index');
     Route::get('/users', 'UserController@index')->name('users.index');
 

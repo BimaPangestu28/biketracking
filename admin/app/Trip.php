@@ -27,4 +27,9 @@ class Trip extends Model
     {
         return $this->belongsToMany(TripCoordinate::class);
     }
+
+    public function details()
+    {
+        return $this->belongsToMany(TripDetail::class);
+    }
 }

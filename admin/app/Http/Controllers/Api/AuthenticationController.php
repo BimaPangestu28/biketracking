@@ -7,11 +7,17 @@ use Illuminate\Http\Request;
 use App\User;
 use Illuminate\Support\Facades\Auth;
 use Validator;
+use \App\Libs\Response as Response;
 
 
 class AuthenticationController extends Controller
 {
     public $successStatus = 200;
+
+    public function __construct()
+    {
+        $this->response = new Response();
+    }
 
     public function login()
     {
@@ -19,9 +25,10 @@ class AuthenticationController extends Controller
             $user = Auth::user();
             $success['token'] =  $user->createToken('pityuApp')->accessToken;
             $success['name'] =  $user->name;
-            return response()->json(['success' => $success], $this->successStatus);
+
+            return $this->response->success_response("Success get detail", $success, 200);
         } else {
-            return response()->json(['error' => 'Unauthorised'], 401);
+            return $this->response->failed_response("Unauthorized", [], 401);
         }
     }
 
@@ -41,7 +48,7 @@ class AuthenticationController extends Controller
 
         // Check e-mail already exists or no
         if (User::where('email', $input['email'])->count() > 0) {
-            return response()->json(['error' => 'E-mail sudah digunakan'], 401);
+            return $this->response->failed_response('E-mail already used', ["email" => "E-mail sudah digunakan"], 401);
         }
 
         $input['password'] = bcrypt($input['password']);
@@ -49,12 +56,9 @@ class AuthenticationController extends Controller
         $success['token'] =  $user->createToken('pityuApp')->accessToken;
         $success['name'] =  $user->name;
 
-        return response()->json(['success' => $success], $this->successStatus);
-    }
+        Auth::login($user, true);
+        $user->sendEmailVerificationNotification();
 
-    public function details()
-    {
-        $user = Auth::user();
-        return response()->json(['success' => $user], $this->successStatus);
+        return $this->response->success_response("Success registered", $success, 201);
     }
 }

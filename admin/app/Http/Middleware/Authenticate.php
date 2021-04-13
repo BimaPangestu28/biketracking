@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use Illuminate\Auth\Middleware\Authenticate as Middleware;
+use \App\Libs\Response as Response;
 
 class Authenticate extends Middleware
 {
@@ -14,8 +15,16 @@ class Authenticate extends Middleware
      */
     protected function redirectTo($request)
     {
-        if (! $request->expectsJson()) {
-            return route('login');
+        $this->response = new Response();
+
+        if (explode("/", $request->route()->uri)[0] == "api") {
+            if (!$request->expectsJson()) {
+                return abort($this->response->failed_response("Unauthorized", [], 403));
+            }
+        } else {
+            if (!$request->expectsJson()) {
+                return route('login');
+            }
         }
     }
 }
