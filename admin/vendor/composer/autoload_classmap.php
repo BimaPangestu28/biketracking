@@ -11,6 +11,8 @@ return array(
     'App\\Http\\Controllers\\Api\\AuthenticationController' => $baseDir . '/app/Http/Controllers/Api/AuthenticationController.php',
     'App\\Http\\Controllers\\Api\\Controller' => $baseDir . '/app/Http/Controllers/Api/Controller.php',
     'App\\Http\\Controllers\\Api\\TripApiController' => $baseDir . '/app/Http/Controllers/Api/TripApiController.php',
+    'App\\Http\\Controllers\\Api\\UserApiController' => $baseDir . '/app/Http/Controllers/Api/UserApiController.php',
+    'App\\Http\\Controllers\\Api\\VoucherApiController' => $baseDir . '/app/Http/Controllers/Api/VoucherApiController.php',
     'App\\Http\\Controllers\\Auth\\ConfirmPasswordController' => $baseDir . '/app/Http/Controllers/Auth/ConfirmPasswordController.php',
     'App\\Http\\Controllers\\Auth\\Controller' => $baseDir . '/app/Http/Controllers/Auth/Controller.php',
     'App\\Http\\Controllers\\Auth\\ForgotPasswordController' => $baseDir . '/app/Http/Controllers/Auth/ForgotPasswordController.php',

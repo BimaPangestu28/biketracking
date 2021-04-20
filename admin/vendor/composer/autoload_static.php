@@ -605,6 +605,8 @@ class ComposerStaticInitf57bd99b8af96b53738f371630260114
         'App\\Http\\Controllers\\Api\\AuthenticationController' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/AuthenticationController.php',
         'App\\Http\\Controllers\\Api\\Controller' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/Controller.php',
         'App\\Http\\Controllers\\Api\\TripApiController' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/TripApiController.php',
+        'App\\Http\\Controllers\\Api\\UserApiController' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/UserApiController.php',
+        'App\\Http\\Controllers\\Api\\VoucherApiController' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/VoucherApiController.php',
         'App\\Http\\Controllers\\Auth\\ConfirmPasswordController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/ConfirmPasswordController.php',
         'App\\Http\\Controllers\\Auth\\Controller' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/Controller.php',
         'App\\Http\\Controllers\\Auth\\ForgotPasswordController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/ForgotPasswordController.php',

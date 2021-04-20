@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
 use \App\Libs\Response as Response;
-
+use App\Trip;
 use App\User;
 
 class UserApiController extends Controller
@@ -54,5 +54,12 @@ class UserApiController extends Controller
         ]);
 
         return $this->response->success_response("success update detail user", User::where(['id' => Auth::user()->id])->first(), 200);
+    }
+
+    public function getTrips(Request $request)
+    {
+        $trips = Trip::where(['user_id' => Auth::user()->id])->get();
+
+        return $this->response->success_response("success get list trips", $trips, 200);
     }
 }

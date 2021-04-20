@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Trip;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class TripController extends Controller
 {

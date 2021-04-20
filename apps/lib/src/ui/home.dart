@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:wakelock/wakelock.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 import './home/profile.dart';
@@ -26,6 +27,7 @@ class HomeScreen extends State<HomePage> {
   @override
   void initState() {
     super.initState();
+    Wakelock.enable();
     // _pageController = PageController();
   }
 

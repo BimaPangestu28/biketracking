@@ -24,6 +24,13 @@ class TripApiController extends Controller
         $this->response = new Response();
     }
 
+    public function list(Request $request)
+    {
+        $trips = Trip::all();
+
+        return $this->response->success_response("success get list trips", $trips, 200);
+    }
+
     public function start(Request $request)
     {
         $trip = Trip::create([
@@ -121,5 +128,14 @@ class TripApiController extends Controller
         ];
 
         return $this->response->success_response("success finish trip", $data, 200);
+    }
+
+    public function topLeaders(Request $request, $type)
+    {
+        if ($type == 'distance') {
+            $leaders = Trip::where()
+        }
+
+        return $this->response->success_response("success get top leaders", $leaders, 200);
     }
 }

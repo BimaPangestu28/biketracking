@@ -24,6 +24,8 @@ Route::get('/dashboard', 'DashboardController@api');
 
 Route::group(['middleware' => 'auth:api'], function () {
     Route::group(['prefix' => '/trips'], function () {
+        Route::get('/', 'Api\TripApiController@list');
+        Route::get('/top-leaders/{type}', 'Api\TripApiController@topLeaders');
         Route::post('/start', 'Api\TripApiController@start');
         Route::post('/{id}/finish', 'Api\TripApiController@finish');
         Route::post('/{id}/upload', 'Api\TripApiController@upload');
@@ -38,5 +40,13 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::group(['prefix' => '/user'], function () {
         Route::put('/update', 'Api\UserApiController@update');
         Route::get('/detail', 'Api\UserApiController@detail');
+        Route::get('/trips', 'Api\UserApiController@getTrips');
+    });
+
+    Route::group(['prefix' => '/vouchers'], function () {
+        Route::get('/', 'Api\VoucherApiController@lists');
+        Route::get('/{id}', 'Api\VoucherApiController@detail');
+        Route::put('/{id}/take_voucher', 'Api\VoucherApiController@take_voucher');
+        Route::put('/{id}/use_voucher', 'Api\VoucherApiController@use_voucher');
     });
 });
